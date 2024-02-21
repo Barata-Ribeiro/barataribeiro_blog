@@ -1,0 +1,45 @@
+{
+    "ts-node": {
+        "files": true,
+        "compilerOptions": {
+            "module": "commonjs",
+            "resolveJsonModule": true
+        }
+    },
+    "compilerOptions": {
+        // project options
+        "lib": ["ES5", "ES6", "ESNext", "DOM"],
+        "removeComments": true,
+        "target": "ES6",
+        "outDir": "./dist",
+        "typeRoots": ["node_modules/@types", "src/@types", "src/interfaces"],
+
+        // Module resolution
+        "baseUrl": "./",
+        "esModuleInterop": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+
+        // Source Map
+        "sourceMap": true,
+        "sourceRoot": "/",
+
+        // Strict Checks
+        "strict": true,
+        "alwaysStrict": true,
+        "strictPropertyInitialization": false,
+        "allowUnreachableCode": false,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "allowJs": false,
+
+        // Linter Checks
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+    },
+    "include": ["./**/*.ts"],
+    "exclude": ["node_modules/**/*"]
+}
