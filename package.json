@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Personal blog of Barata-Ribeiro",
     "main": "server.js",
+    "private": true,
     "scripts": {
         "start": "node dist/src/server.js",
         "start:tsnode": "ts-node src/server.ts",
@@ -10,18 +11,31 @@
         "build": "rm -rf dist && tsc --build",
         "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Barata-Ribeiro/barata-ribeiro_blog.git"
+    },
     "keywords": [
         "express",
         "mongodb",
         "api",
+        "apirestful",
         "blog",
         "restful",
         "crud",
         "ejs",
-        "expressjs"
+        "expressjs",
+        "jwt",
+        "mongoose",
+        "node",
+        "nodejs"
     ],
     "author": "Barata-Ribeiro",
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Barata-Ribeiro/barata-ribeiro_blog/issues"
+    },
+    "homepage": "https://github.com/Barata-Ribeiro/barata-ribeiro_blog#readme",
     "dependencies": {
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.2",
