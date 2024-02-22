@@ -1,1 +1,7 @@
 @import url(reset.css);
+@import url(main.css);
+
+/* Layout Imports */
+@import url(./layouts/header.css);
+@import url(./layouts/search.css);
+@import url(./layouts/footer.css);

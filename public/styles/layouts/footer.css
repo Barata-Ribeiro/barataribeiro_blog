@@ -1,0 +1,22 @@
+.footer {
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer__copy {
+    cursor: default;
+}
+
+.footer__copy:hover,
+.footer__link:hover {
+    background-color: var(--color-1);
+    color: var(--color-5);
+}
