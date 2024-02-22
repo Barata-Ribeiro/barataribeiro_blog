@@ -14,6 +14,9 @@ import logger from "morgan"
 import path from "path"
 import favicon from "serve-favicon"
 
+// Custom Imports
+import connectToDatabase from "./api/v1/config/database"
+
 // Custom Middleware
 import SetCacheControl from "./middlewares/SetCacheControl"
 
@@ -22,6 +25,8 @@ const startServer = async () => {
         let app = express()
         const PORT = process.env.PORT || 3000
         let ENV = process.env.NODE_ENV || "development"
+
+        await connectToDatabase()
 
         app.set("port", PORT)
         app.set("trust proxy", 1)
@@ -45,10 +50,10 @@ const startServer = async () => {
                 cookie: {
                     secure: true,
                     httpOnly: true,
-                    sameSite: "lax",
+                    sameSite: "strict",
                     domain: process.env.SESSION_DOMAIN || "http://localhost:3000",
                     path: process.env.SESSION_PATH || "/",
-                    expires: new Date(Date.now() + 60 * 60 * 1000)
+                    maxAge: 1 * 24 * 60 * 60 * 1000
                 }
             })
         )
