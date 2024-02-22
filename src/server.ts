@@ -18,6 +18,7 @@ import favicon from "serve-favicon"
 import connectToDatabase from "./api/v1/config/database"
 
 // Custom Middleware
+import SetCurrentYear from "./middlewares/CurrentYear"
 import SetCacheControl from "./middlewares/SetCacheControl"
 
 const startServer = async () => {
@@ -73,8 +74,10 @@ const startServer = async () => {
         app.set("views", path.join(__dirname, "views"))
         app.set("view engine", "ejs")
 
+        app.use(SetCurrentYear)
+
         app.get("/", function (_req, res, _next) {
-            res.render("index", { title: "Express" })
+            res.render("index", { title: "Express", description: "Welcome to Express" })
         })
 
         if (app.get("env") === "development") app.use(errorHandler())
