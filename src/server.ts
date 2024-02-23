@@ -80,6 +80,10 @@ const startServer = async () => {
             res.render("index", { title: "Express", description: "Welcome to Express" })
         })
 
+        app.use((_req, res) =>
+            res.status(404).render("pages/404", { title: "404 - Not Found", description: "Page not found" })
+        )
+
         if (app.get("env") === "development") app.use(errorHandler())
 
         app.listen(PORT, () => {

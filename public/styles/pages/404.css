@@ -1,0 +1,68 @@
+.error404 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: default;
+}
+
+.error404__title {
+    color: var(--color-3);
+    font-size: 8rem;
+}
+
+.error404__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.error404__description-subtitle:hover,
+.error404__description-text:hover {
+    background-color: var(--color-1);
+    color: var(--color-5);
+}
+
+.error404__description-link {
+    position: relative;
+    background: #fff;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 0.125rem solid var(--color-1);
+    border-radius: 0.3rem;
+    color: var(--color-1);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 0;
+    padding: 2rem 4rem;
+    text-align: left;
+    text-decoration: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transform: translateZ(0) scale(1);
+    transition: transform 0.2s;
+}
+
+.error404__description-link:not(:disabled):hover {
+    background-color: var(--color-1);
+    color: var(--color-5);
+    transform: scale(1.05);
+}
+
+.error404__description-link:not(:disabled):hover:active {
+    transform: scale(1.05) translateY(0.125rem);
+}
+
+.error404__description-link:focus {
+    outline: 0 solid transparent;
+}

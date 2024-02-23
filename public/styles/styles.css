@@ -5,3 +5,6 @@
 @import url(./layouts/header.css);
 @import url(./layouts/search.css);
 @import url(./layouts/footer.css);
+
+/* Pages */
+@import url(./pages/404.css);
