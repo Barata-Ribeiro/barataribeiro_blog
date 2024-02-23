@@ -16,6 +16,7 @@ import favicon from "serve-favicon"
 
 // Custom Imports
 import connectToDatabase from "./api/v1/config/database"
+import endpointAuth from "./endpoints/auth"
 
 // Custom Middleware
 import SetCurrentYear from "./middlewares/CurrentYear"
@@ -76,9 +77,11 @@ const startServer = async () => {
 
         app.use(SetCurrentYear)
 
+        // ENDPOINTS
         app.get("/", function (_req, res, _next) {
             res.render("index", { title: "Express", description: "Welcome to Express" })
         })
+        app.use("/auth", endpointAuth)
 
         app.use((_req, res) =>
             res.status(404).render("pages/404", { title: "404 - Not Found", description: "Page not found" })
