@@ -14,16 +14,28 @@ html {
 body {
     font-size: 1.6rem;
     line-height: 1.5;
+
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
 }
 
 .screenreader {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 0.125rem;
+    height: 0.125rem;
     padding: 0;
-    margin: -1px;
+    margin: -0.125rem;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+}
+
+.container {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 2rem auto;
+    padding-inline: 2rem;
 }

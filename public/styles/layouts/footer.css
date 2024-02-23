@@ -1,6 +1,5 @@
 .footer {
-    margin: 0 auto;
-    padding: 4rem 2rem;
+    margin-top: auto;
 }
 
 .footer__container {
@@ -8,6 +7,7 @@
     justify-content: space-between;
     align-items: center;
     max-width: 960px;
+    padding: 4rem 2rem;
     margin: 0 auto;
 }
 
