@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt"
 import mongoose from "mongoose"
 
 const Schema = mongoose.Schema
@@ -33,4 +34,13 @@ const UserSchema = new Schema(
     },
     { timestamps: true }
 )
-export default mongoose.model("User", UserSchema)
+
+UserSchema.methods.hashPassword = function (password: string) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}
+
+UserSchema.methods.comparePassword = function (password: string) {
+    return bcrypt.compareSync(password, this.password)
+}
+
+export default mongoose.model("User", UserSchema, "users")
