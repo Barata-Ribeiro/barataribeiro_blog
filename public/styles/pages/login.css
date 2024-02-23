@@ -1,16 +1,16 @@
-.register-account__title {
+.login-account__title {
     font-size: 3.6rem;
     color: var(--color-1);
     margin-bottom: 2rem;
 }
 
-.register-account__rendered-form {
+.login-account__rendered-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.register-account__rendered-form label {
+.login-account__rendered-form label {
     display: block;
     margin-bottom: 0.5rem;
     max-width: -webkit-max-content;
@@ -19,14 +19,19 @@
     cursor: default;
 }
 
-.register-account__rendered-form label:hover {
+.login-account__rendered-form label:hover {
     background-color: var(--color-1);
     color: var(--color-5);
 }
 
-.register-account__input-username,
-.register-account__input-email,
-.register-account__input-password {
+.register-account__formbuilder-required,
+.login-account__formbuilder-required {
+    color: red;
+    font-size: 1.6rem;
+}
+
+.login-account__input-username,
+.login-account__input-password {
     width: 100%;
     padding: 0.75rem;
     border: 0.125rem solid var(--color-4);
@@ -35,14 +40,13 @@
     font-size: 1.4rem;
 }
 
-.register-account__input-username:focus,
-.register-account__input-email:focus,
-.register-account__input-password:focus {
+.login-account__input-username:focus,
+.login-account__input-password:focus {
     border-color: var(--color-5);
     outline: none;
 }
 
-.register-account__button-submit {
+.login-account__button-submit {
     position: relative;
     background: #fff;
     -webkit-backface-visibility: hidden;
@@ -68,21 +72,21 @@
     transition: transform 0.2s;
 }
 
-.register-account__button-submit:not(:disabled):hover {
+.login-account__button-submit:not(:disabled):hover {
     background-color: var(--color-1);
     color: var(--color-5);
     transform: scale(1.05);
 }
 
-.register-account__button-submit:not(:disabled):hover:active {
+.login-account__button-submit:not(:disabled):hover:active {
     transform: scale(1.05) translateY(0.125rem);
 }
 
-.register-account__button-submit:focus {
+.login-account__button-submit:focus {
     outline: 0 solid transparent;
 }
 
-.register-account__login {
+.login-account__register {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
@@ -92,18 +96,18 @@
     cursor: default;
 }
 
-.register-account__login-text:hover {
+.login-account__register-text:hover {
     background-color: var(--color-1);
     color: var(--color-5);
 }
 
-.register-account__login-link {
+.login-account__register-link {
     color: var(--color-4);
     text-decoration: none;
     cursor: pointer;
 }
 
-.register-account__login-link:hover {
+.login-account__register-link:hover {
     background-color: var(--color-1);
     color: var(--color-5);
     text-decoration: underline;

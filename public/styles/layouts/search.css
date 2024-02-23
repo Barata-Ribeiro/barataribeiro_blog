@@ -33,3 +33,9 @@
 .search__input::placeholder {
     color: var(--color-3);
 }
+
+@media screen and (max-width: 480px) {
+    .search__form {
+        display: none;
+    }
+}

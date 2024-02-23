@@ -1,17 +1,17 @@
 <section id="register-account">
     <h1 class="register-account__title">Register</h1>
 
-    <form action="/api/v1/register" method="POST" class="rendered-form">
-        <div id="field-username">
+    <form action="/api/v1/register" method="POST" class="register-account__rendered-form">
+        <div id="register-account__field-username">
             <label for="username">
                 Username
-                <span class="formbuilder-required">*</span></label
-            >
+                <span class="register-account__formbuilder-required">*</span>
+            </label>
             <input
                 type="text"
                 placeholder="Username"
                 autocomplete="username"
-                class="form__input-username"
+                class="register-account__input-username"
                 name="username"
                 access="false"
                 id="username"
@@ -20,8 +20,11 @@
                 aria-label="Username"
             />
         </div>
-        <div id="field-email">
-            <label for="email">Email</label>
+        <div id="register-account__field-email">
+            <label for="email">
+                Email
+                <span class="register-account__formbuilder-required">*</span>
+            </label>
             <input
                 type="email"
                 autocomplete="email"
@@ -35,11 +38,11 @@
                 aria-label="Email"
             />
         </div>
-        <div id="field-password">
+        <div id="register-account__field-password">
             <label for="password">
                 Password
-                <span class="formbuilder-required">*</span></label
-            >
+                <span class="register-account__formbuilder-required">*</span>
+            </label>
             <input
                 type="password"
                 placeholder="ex: 123456"
@@ -53,13 +56,13 @@
                 aria-label="Password"
             />
         </div>
-        <div id="field-register-account__button-submit">
+        <div id="register-account__field">
             <button
                 type="submit"
                 class="register-account__button-submit"
-                name="button-register-submit"
+                name="register-account__button-submit"
                 access="false"
-                id="button-register-submit"
+                id="register-account__button-submit"
                 aria-label="Sign Up"
             >
                 Sign Up
@@ -67,7 +70,7 @@
         </div>
     </form>
 
-    <p class="register-account__login">
-        Already have an account? <a href="/auth/login" class="register-account__login-link">Login</a>
-    </p>
+    <span class="register-account__login">
+        <p class="register-account__login-text">Already have an account?</p> <a href="/auth/login" class="register-account__login-link">Login</a>
+    </s>
 </section>
