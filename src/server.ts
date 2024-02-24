@@ -16,10 +16,12 @@ import favicon from "serve-favicon"
 
 // Custom Imports
 import connectToDatabase from "./api/v1/config/database"
+import authRoutes from "./api/v1/routes/AuthRoutes"
 import endpointAuth from "./endpoints/auth"
 
 // Custom Middleware
 import SetCurrentYear from "./middlewares/CurrentYear"
+import errorMiddleware from "./middlewares/ErrorMiddleware"
 import SetCacheControl from "./middlewares/SetCacheControl"
 
 const startServer = async () => {
@@ -69,23 +71,27 @@ const startServer = async () => {
         app.use(SetCacheControl)
         app.use(compression({ level: 6, threshold: 100 * 1000 }))
         app.use(express.static(path.join(__dirname, "..", "public")))
-
         app.use(expressLayouts)
+        app.use(SetCurrentYear)
         app.set("layout", "./layouts/main")
         app.set("views", path.join(__dirname, "views"))
         app.set("view engine", "ejs")
 
-        app.use(SetCurrentYear)
+        // API ENDPOINTS
+        app.use("/api/v1/auth", authRoutes)
 
-        // ENDPOINTS
+        // VIEW ENDPOINTS
         app.get("/", function (_req, res, _next) {
             res.render("index", { title: "Express", description: "Welcome to Express" })
         })
         app.use("/auth", endpointAuth)
 
+        // ERRORS
         app.use((_req, res) =>
             res.status(404).render("pages/404", { title: "404 - Not Found", description: "Page not found" })
         )
+
+        app.use(errorMiddleware)
 
         if (app.get("env") === "development") app.use(errorHandler())
 
