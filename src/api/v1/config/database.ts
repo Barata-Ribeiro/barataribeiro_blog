@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const connectToDatabase = async () => {
+export const connectToDatabase = async () => {
     try {
         const URI = process.env.MONGODB_URI || "mongodb://localhost:27017/test"
         await mongoose.connect(URI)
@@ -11,4 +11,10 @@ const connectToDatabase = async () => {
     }
 }
 
-export default connectToDatabase
+export const connection = mongoose.connection
+    .on("open", () => console.log("The goose is open"))
+    .on("close", () => console.log("The goose is closed"))
+    .on("error", (error) => {
+        console.log(error)
+        process.exit()
+    })

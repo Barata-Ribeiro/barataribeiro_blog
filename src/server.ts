@@ -1,6 +1,7 @@
 // Dependency Imports
 import bodyParser from "body-parser"
 import compression from "compression"
+import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import "dotenv/config"
@@ -13,10 +14,13 @@ import methodOverride from "method-override"
 import logger from "morgan"
 import path from "path"
 import favicon from "serve-favicon"
+import { v4 as uuidv4 } from "uuid"
 
 // Custom Imports
-import connectToDatabase from "./api/v1/config/database"
+import { connectToDatabase, connection } from "./api/v1/config/database"
 import authRoutes from "./api/v1/routes/AuthRoutes"
+import postsRoutes from "./api/v1/routes/PostsRoutes"
+import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
 
 // Custom Middleware
@@ -47,10 +51,10 @@ const startServer = async () => {
         app.use(cookieParser())
         app.use(
             session({
-                name: "session_id",
-                resave: true,
-                saveUninitialized: true,
+                genid: (_req) => uuidv4(),
                 secret: process.env.SESSION_SECRET_KEY || "session_secret_test_key",
+                resave: true,
+                saveUninitialized: false,
                 cookie: {
                     secure: true,
                     httpOnly: true,
@@ -58,7 +62,15 @@ const startServer = async () => {
                     domain: process.env.SESSION_DOMAIN || "http://localhost:3000",
                     path: process.env.SESSION_PATH || "/",
                     maxAge: 1 * 24 * 60 * 60 * 1000
-                }
+                },
+                store: MongoStore.create({
+                    client: connection.getClient(),
+                    dbName: process.env.MONGODB_DBNAME || "test",
+                    collectionName: "sessions",
+                    stringify: false,
+                    autoRemove: "interval",
+                    autoRemoveInterval: 1
+                })
             })
         )
         app.use(helmet({ crossOriginResourcePolicy: false }))
@@ -79,9 +91,11 @@ const startServer = async () => {
 
         // API ENDPOINTS
         app.use("/api/v1/auth", authRoutes)
+        app.use("/api/v1/users", usersRoutes)
+        app.use("/api/v1/posts", postsRoutes)
 
         // VIEW ENDPOINTS
-        app.get("/", function (_req, res, _next) {
+        app.get("/", function (_req, res) {
             res.render("index", { title: "Express", description: "Welcome to Express" })
         })
         app.use("/auth", endpointAuth)
