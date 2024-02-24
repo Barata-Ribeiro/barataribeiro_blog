@@ -1,7 +1,7 @@
 <section id="register-account">
     <h1 class="register-account__title">Register</h1>
 
-    <form action="/api/v1/register" method="POST" class="register-account__rendered-form">
+    <form class="register-account__rendered-form">
         <div id="register-account__field-username">
             <label for="username">
                 Username
@@ -58,7 +58,7 @@
         </div>
         <div id="register-account__field">
             <button
-                type="submit"
+                type="button"
                 class="register-account__button-submit"
                 name="register-account__button-submit"
                 access="false"
@@ -67,6 +67,7 @@
             >
                 Sign Up
             </button>
+            <span id="error-message" role="alert" style="color: red; display: none; margin-top: 1rem"></span>
         </div>
     </form>
 
@@ -74,3 +75,4 @@
         <p class="register-account__login-text">Already have an account?</p> <a href="/auth/login" class="register-account__login-link">Login</a>
     </s>
 </section>
+<script src="/scripts/register.js"></script>
