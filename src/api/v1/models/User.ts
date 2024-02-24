@@ -1,6 +1,17 @@
 import bcrypt from "bcrypt"
 import mongoose from "mongoose"
 
+interface User extends Document {
+    username: string
+    email: string
+    password: string
+    bio?: string
+    role: "user" | "admin"
+    posts: mongoose.Schema.Types.ObjectId[]
+    hashPassword(password: string): string
+    comparePassword(candidatePassword: string): boolean
+}
+
 const Schema = mongoose.Schema
 const UserSchema = new Schema(
     {
@@ -43,4 +54,4 @@ UserSchema.methods.comparePassword = function (password: string) {
     return bcrypt.compareSync(password, this.password)
 }
 
-export default mongoose.model("User", UserSchema, "users")
+export default mongoose.model<User>("User", UserSchema, "users")
