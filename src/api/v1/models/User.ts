@@ -1,14 +1,14 @@
 import bcrypt from "bcrypt"
 import mongoose from "mongoose"
 
-interface User extends mongoose.Document {
+export interface User extends mongoose.Document {
     username: string
     email: string
     password: string
     displayName?: string
     bio?: string
     role: "user" | "admin"
-    posts: mongoose.Schema.Types.ObjectId[]
+    posts?: mongoose.Schema.Types.ObjectId[]
     hashPassword(password: string): string
     comparePassword(candidatePassword: string): boolean
 }

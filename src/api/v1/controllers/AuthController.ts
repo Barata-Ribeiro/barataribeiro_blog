@@ -13,6 +13,9 @@ import User from "../models/User"
 
 export class AuthController {
     async login(req: Request, res: Response) {
+        const sessionData = req.session.user
+        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData.data.username}`)
+
         const { username, password } = req.body
         if (!username || !password) throw new BadRequestError("Username and password are required.")
 
@@ -26,18 +29,21 @@ export class AuthController {
 
         res.cookie("authToken", jwtToken, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: "lax",
             maxAge: 30 * 24 * 60 * 60 * 1000
         })
 
-        res.locals.data = {
-            username: user.username,
-            email: user.email,
-            role: user.role
-        }
+        req.session.save((err) => {
+            if (err) {
+                console.error(err)
+                throw new UnauthorizedError("Failed to save the session.")
+            }
 
-        return res.status(200).json({ status: "success", message: "Logged in successfully" })
+            res.locals.user = user
+
+            return res.status(200).json({ status: "success", message: "Logged in successfully" })
+        })
     }
 
     async register(req: Request, res: Response) {
