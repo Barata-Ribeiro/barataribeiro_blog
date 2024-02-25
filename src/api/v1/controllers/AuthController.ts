@@ -14,7 +14,7 @@ import User from "../models/User"
 export class AuthController {
     async login(req: Request, res: Response) {
         const sessionData = req.session.user
-        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData.data.username}`)
+        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
         const { username, password } = req.body
         if (!username || !password) throw new BadRequestError("Username and password are required.")
@@ -76,7 +76,25 @@ export class AuthController {
         }
     }
 
-    async logout(_req: Request, _res: Response) {}
+    async logout(req: Request, res: Response) {
+        res.clearCookie("authToken")
+
+        req.session.user = {
+            data: null,
+            isLoggedIn: false
+        }
+
+        req.session.destroy((err) => {
+            if (err) {
+                console.error(err)
+                throw new InternalServerError("Failed to destroy the session.")
+            }
+
+            res.locals.user = null
+
+            return res.status(200).json({ status: "success", message: "Logged out successfully." })
+        })
+    }
 
     private capitalizeFirstLetter(str: string) {
         return str.charAt(0).toUpperCase() + str.slice(1)
