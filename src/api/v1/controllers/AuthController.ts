@@ -29,9 +29,9 @@ export class AuthController {
 
         res.cookie("authToken", jwtToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: "lax",
-            maxAge: 30 * 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 1 * 24 * 60 * 60 * 1000
         })
 
         req.session.save((err) => {

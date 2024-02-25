@@ -56,8 +56,8 @@ const startServer = async () => {
                 resave: true,
                 saveUninitialized: false,
                 cookie: {
-                    secure: true,
                     httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
                     sameSite: "strict",
                     domain: process.env.SESSION_DOMAIN || "http://localhost:3000",
                     path: process.env.SESSION_PATH || "/",
