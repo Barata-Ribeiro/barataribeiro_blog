@@ -1,10 +1,11 @@
 import bcrypt from "bcrypt"
 import mongoose from "mongoose"
 
-interface User extends Document {
+interface User extends mongoose.Document {
     username: string
     email: string
     password: string
+    displayName?: string
     bio?: string
     role: "user" | "admin"
     posts: mongoose.Schema.Types.ObjectId[]
@@ -23,6 +24,7 @@ const UserSchema = new Schema(
             match: [/^[a-zA-Z0-9]+$/, "is invalid"],
             index: true
         },
+        displayName: { type: String, trim: true },
         email: {
             type: String,
             lowercase: true,
@@ -33,7 +35,8 @@ const UserSchema = new Schema(
         },
         password: {
             type: String,
-            required: [true, "Password is required"]
+            required: [true, "Password is required"],
+            select: false
         },
         bio: String,
         role: {
