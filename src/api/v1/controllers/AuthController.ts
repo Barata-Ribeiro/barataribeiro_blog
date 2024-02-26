@@ -9,20 +9,29 @@ export class AuthController {
         const sessionData = req.session.user
         if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
+        const head = {
+            title: "Login",
+            description: "Login to your account."
+        }
+
         const { username, password } = req.body
         if (!username || !password)
-            return res.redirect(`/auth/login?error=${encodeURIComponent("Username and password are required.")}`)
+            return res.render("pages/auth/login", {
+                ...head,
+                error: "Username and password are required."
+            })
 
         const user = await User.findOne({ username }).select("+password")
         const checkPassword = await user?.comparePassword(password)
         if (!user || !checkPassword)
-            return res.redirect(`/auth/login?error=${encodeURIComponent("Invalid username or password.")}`)
+            return res.render("pages/auth/login", { ...head, error: "Invalid username or password." })
 
         const secretKey = process.env.JWT_SECRET_KEY || "secret"
         if (!secretKey)
-            return res.redirect(
-                `/auth/login?error=${encodeURIComponent("JWT secret key not found. \n Please contact the administrator.")}`
-            )
+            return res.render("pages/auth/login", {
+                ...head,
+                error: "JWT secret key not found. \n Please contact the administrator."
+            })
 
         const jwtToken = sign({ username: user.username }, secretKey, { expiresIn: "1d" })
 
@@ -41,33 +50,38 @@ export class AuthController {
         req.session.save((err) => {
             if (err) {
                 console.error(err)
-                return res.redirect(`/auth/login?error=${encodeURIComponent("Failed to save session.")}`)
+                return res.render("pages/auth/login", { ...head, error: "Failed to save session." })
             }
 
             res.locals.user = user
 
-            return res.status(200).redirect(`/dashboard/${user.username}`)
+            return res.status(302).redirect(`/dashboard/${user.username}`)
         })
     }
 
     async register(req: Request, res: Response) {
+        const sessionData = req.session.user
+        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
+
+        const head = {
+            title: "Register",
+            description: "Register a new account."
+        }
+
         const { username, email, password } = req.body
         if (!username || !email || !password)
-            return res.redirect(
-                `/auth/register?error=${encodeURIComponent("Username, email and password are required.")}`
-            )
+            return res.render("pages/auth/register", { ...head, error: "Username, email and password are required." })
 
         const doesUserExistByUsername = await User.exists({ username })
         if (doesUserExistByUsername)
-            return res.redirect(
-                `/auth/register?error=${encodeURIComponent("An account with this username already exists.")}`
-            )
+            return res.render("pages/auth/register", {
+                ...head,
+                error: "An account with this username already exists."
+            })
 
         const doesUserExistByEmail = await User.exists({ email })
         if (doesUserExistByEmail)
-            return res.redirect(
-                `/auth/register?error=${encodeURIComponent("An account with this email already exists.")}`
-            )
+            return res.render("pages/auth/register", { ...head, error: "An account with this email already exists." })
 
         const salt = bcrypt.genSaltSync(10)
         const hashPassword = bcrypt.hashSync(password, salt)
@@ -84,9 +98,9 @@ export class AuthController {
                 const messages = Object.values(error.errors).map(
                     (err) => `${err.name}: ${this.capitalizeFirstLetter(err.path)} ${err.message}.`
                 )
-                return res.redirect(`/auth/register?error=${encodeURIComponent(messages.join("\n "))}`)
+                return res.render("pages/auth/register", { ...head, error: messages.join(" ") })
             }
-            return res.redirect(`/auth/register?error=${encodeURIComponent("Failed to create user account.")}`)
+            return res.render("pages/auth/register", { ...head, error: "Failed to create user account." })
         }
     }
 
