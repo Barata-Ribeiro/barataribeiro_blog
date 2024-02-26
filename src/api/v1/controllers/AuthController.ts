@@ -19,8 +19,9 @@ export class AuthController {
         const { username, password } = req.body
         if (!username || !password) throw new BadRequestError("Username and password are required.")
 
-        const user = await User.findOne({ username })
-        if (!user || !user.comparePassword(password)) throw new UnauthorizedError("Invalid username or password.")
+        const user = await User.findOne({ username }).select("+password")
+        const checkPassword = await user?.comparePassword(password)
+        if (!user || !checkPassword) throw new UnauthorizedError("Invalid username or password.")
 
         const secretKey = process.env.JWT_SECRET_KEY || "secret"
         if (!secretKey) throw new NotFoundError("JWT secret key not found. Please contact the administrator.")
@@ -83,17 +84,6 @@ export class AuthController {
             data: null,
             isLoggedIn: false
         }
-
-        req.session.destroy((err) => {
-            if (err) {
-                console.error(err)
-                throw new InternalServerError("Failed to destroy the session.")
-            }
-
-            res.locals.user = null
-
-            return res.status(200).json({ status: "success", message: "Logged out successfully." })
-        })
     }
 
     private capitalizeFirstLetter(str: string) {
