@@ -88,10 +88,7 @@ export class AuthController {
 
         try {
             await User.create({ username, email, password: hashPassword })
-            return res
-                .status(201)
-                .json({ status: "success", message: "User account created successfully." })
-                .redirect("/auth/login")
+            return res.status(201).redirect("/auth/login")
         } catch (error) {
             console.error(error)
             if (error instanceof mongoose.Error.ValidationError) {
@@ -111,6 +108,17 @@ export class AuthController {
             data: null,
             isLoggedIn: false
         }
+
+        req.session.destroy((err) => {
+            if (err) {
+                console.error(err)
+                return res.status(500).json({ error: "Failed to destroy session." })
+            }
+
+            res.locals.user = null
+
+            return res.status(302).redirect("/auth/login")
+        })
     }
 
     private capitalizeFirstLetter(str: string) {
