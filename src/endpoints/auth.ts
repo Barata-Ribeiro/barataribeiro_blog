@@ -2,8 +2,12 @@ import { Router } from "express"
 
 const routes = Router({ mergeParams: true })
 
-routes.get("/register", (_req, res) =>
-    res.status(200).render("pages/auth/register", { title: "Register", description: "Register a new account" })
+routes.get("/register", (req, res) =>
+    res.status(200).render("pages/auth/register", {
+        title: "Register",
+        description: "Register a new account",
+        errorMessage: req.query.error
+    })
 )
 
 routes.get("/login", (req, res) =>

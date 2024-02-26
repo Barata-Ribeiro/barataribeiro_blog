@@ -1,78 +1,57 @@
 <section id="register-account">
     <h1 class="register-account__title">Register</h1>
 
-    <form class="register-account__rendered-form">
+    <form class="register-account__rendered-form" action="/api/v1/auth/register" method="POST">
         <div id="register-account__field-username">
             <label for="username">
                 Username
                 <span class="register-account__formbuilder-required">*</span>
             </label>
-            <input
-                type="text"
-                placeholder="Username"
-                autocomplete="username"
-                class="register-account__input-username"
-                name="username"
-                access="false"
-                id="username"
-                required="required"
-                aria-required="true"
-                aria-label="Username"
-            />
+            <input type="text" placeholder="Username" autocomplete="username" class="register-account__input-username"
+                name="username" access="false" id="username" required="required" aria-required="true"
+                aria-label="Username" />
         </div>
         <div id="register-account__field-email">
             <label for="email">
                 Email
                 <span class="register-account__formbuilder-required">*</span>
             </label>
-            <input
-                type="email"
-                autocomplete="email"
-                placeholder="contact@example.com"
-                class="register-account__input-email"
-                name="email"
-                access="false"
-                id="email"
-                required="required"
-                aria-required="true"
-                aria-label="Email"
-            />
+            <input type="email" autocomplete="email" placeholder="contact@example.com"
+                class="register-account__input-email" name="email" access="false" id="email" required="required"
+                aria-required="true" aria-label="Email" />
         </div>
         <div id="register-account__field-password">
             <label for="password">
                 Password
                 <span class="register-account__formbuilder-required">*</span>
             </label>
-            <input
-                type="password"
-                placeholder="ex: 123456"
-                autocomplete="new-password"
-                class="register-account__input-password"
-                name="password"
-                access="false"
-                id="password"
-                required="required"
-                aria-required="true"
-                aria-label="Password"
-            />
+            <input type="password" placeholder="ex: 123456" autocomplete="new-password"
+                class="register-account__input-password" name="password" access="false" id="password"
+                required="required" aria-required="true" aria-label="Password" />
         </div>
         <div id="register-account__field">
-            <button
-                type="button"
-                class="register-account__button-submit"
-                name="register-account__button-submit"
-                access="false"
-                id="register-account__button-submit"
-                aria-label="Sign Up"
-            >
+            <button type="submit" class="register-account__button-submit" name="register-account__button-submit"
+                access="false" id="register-account__button-submit" aria-label="Sign Up">
                 Sign Up
             </button>
-            <span id="error-message" role="alert" style="color: red; display: none; margin-top: 1rem"></span>
+            <% if (errorMessage) { %>
+            <span id="error-message" role="alert" aria-label="<%= errorMessage %>"
+                class="form__error-message"><%= errorMessage %></span>
+            <% } %>
         </div>
     </form>
 
     <span class="register-account__login">
-        <p class="register-account__login-text">Already have an account?</p> <a href="/auth/login" class="register-account__login-link">Login</a>
-    </s>
+        <p class="register-account__login-text">Already have an account?</p> <a href="/auth/login"
+            class="register-account__login-link">Login</a>
+        </s>
 </section>
-<script src="/scripts/register.js"></script>
+<script>
+    const formEl = document.querySelector(".register-account__rendered-form");
+    const buttonEl = document.getElementById("register-account__button-submit");
+
+    formEl.addEventListener("submit", function() {
+        buttonEl.setAttribute("disabled", true)
+        buttonEl.textContent = 'Loading...';
+    });
+</script>
