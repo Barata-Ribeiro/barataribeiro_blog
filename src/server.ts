@@ -19,7 +19,6 @@ import { v4 as uuidv4 } from "uuid"
 // Custom Imports
 import { connectToDatabase, connection } from "./api/v1/config/database"
 import authRoutes from "./api/v1/routes/AuthRoutes"
-import postsRoutes from "./api/v1/routes/PostsRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
 
@@ -57,10 +56,9 @@ const startServer = async () => {
                 saveUninitialized: false,
                 cookie: {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
+                    secure: process.env.NODE_ENV === "production",
                     sameSite: "strict",
-                    domain: process.env.SESSION_DOMAIN || "http://localhost:3000",
-                    path: process.env.SESSION_PATH || "/",
+
                     maxAge: 1 * 24 * 60 * 60 * 1000
                 },
                 store: MongoStore.create({
@@ -90,9 +88,8 @@ const startServer = async () => {
         app.set("view engine", "ejs")
 
         // API ENDPOINTS
-        app.use("/api/v1/auth", authRoutes)
-        app.use("/api/v1/users", usersRoutes)
-        app.use("/api/v1/posts", postsRoutes)
+        app.use("/auth", authRoutes)
+        app.use("/users", usersRoutes)
 
         // VIEW ENDPOINTS
         app.get("/", function (_req, res) {
