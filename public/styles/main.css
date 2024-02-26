@@ -41,3 +41,18 @@ body {
     margin: 2rem auto;
     padding-inline: 2rem;
 }
+
+.form__error-message {
+    display: block;
+    max-width: -webkit-max-content;
+    max-width: -moz-max-content;
+    max-width: max-content;
+    color: #dc2626;
+    margin-top: 1rem;
+    cursor: default;
+}
+
+.form__error-message:hover {
+    background-color: var(--color-1);
+    color: #fca5a5;
+}
