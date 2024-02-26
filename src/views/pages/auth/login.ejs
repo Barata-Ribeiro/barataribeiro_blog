@@ -1,7 +1,7 @@
 <section class="login-account">
     <h1 class="login-account__title">Login</h1>
 
-    <form class="login-account__rendered-form" action="/api/v1/auth/login" method="POST">
+    <form class="login-account__rendered-form" action="/auth/login" method="POST">
         <div class="login-account__field-username">
             <label for="username">
                 Username
@@ -23,9 +23,9 @@
                 access="false" id="login-account__button-submit" aria-label="Sign In">
                 Login
             </button>
-            <% if (errorMessage) { %>
-            <span id="error-message" role="alert" aria-label="<%= errorMessage %>"
-                class="form__error-message"><%= errorMessage %></span>  
+            <% if (error) { %>
+            <span id="error-message" role="alert" aria-label="<%= error %>"
+                class="form__error-message"><%= error %></span>
             <% } %>
         </div>
     </form>
