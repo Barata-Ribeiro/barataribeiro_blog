@@ -8,7 +8,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
         const authTokenCookie = req.cookies.authToken
         if (!authTokenCookie) throw new UnauthorizedError("You must be logged in to proceed.")
 
-        const tokenfromCookie = authTokenCookie.split(" ")[1]
+        const tokenfromCookie = authTokenCookie
         if (!tokenfromCookie) throw new UnauthorizedError("Your cookie is missing the authorization token.")
 
         const secretKey = process.env.JWT_SECRET_KEY
