@@ -1,7 +1,7 @@
 <section class="login-account">
     <h1 class="login-account__title">Login</h1>
 
-    <form class="login-account__rendered-form">
+    <form class="login-account__rendered-form" action="/api/v1/auth/login" method="POST">
         <div class="login-account__field-username">
             <label for="username">
                 Username
@@ -38,7 +38,7 @@
         </div>
         <div class="login-account__field">
             <button
-                type="button"
+                type="submit"
                 class="login-account__button-submit"
                 name="login-account__button-submit"
                 access="false"
@@ -47,7 +47,9 @@
             >
                 Login
             </button>
-            <span id="error-message" role="alert" style="color: red; display: none; margin-top: 1rem"></span>
+            <% if (errorMessage) { %>
+                <span id="error-message" role="alert" style="color: red; display: block; margin-top: 1rem"><%= errorMessage %></span>
+            <% } %>
         </div>
     </form>
 
@@ -56,4 +58,12 @@
         <a href="/auth/register" class="login-account__register-link">Register</a>
     </span>
 </section>
-<script src="/scripts/login.js"></script>
+<script>
+    const formEl = document.querySelector(".login-account__rendered-form");
+    const buttonEl = document.getElementById("login-account__button-submit");
+
+    formEl.addEventListener('submit', function() {
+        buttonEl.setAttribute("disabled", true)
+        buttonEl.textContent = 'Loading...';
+    });
+</script>
