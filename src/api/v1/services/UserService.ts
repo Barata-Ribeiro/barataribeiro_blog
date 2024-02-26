@@ -4,7 +4,7 @@ import { ConflictError, InternalServerError, NotFoundError } from "../../../midd
 import User from "../models/User"
 
 export class UserService {
-    async updateUser(username: string, requestingBody: UserEditRequestBody) {
+    async updateAccount(username: string, requestingBody: UserEditRequestBody) {
         const { username: newUsername, displayName, password, bio } = requestingBody
         try {
             const user = await User.findOne({ username })
