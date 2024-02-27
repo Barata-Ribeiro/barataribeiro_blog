@@ -2,15 +2,56 @@
     <nav class="dashboard__navigation">
         <ul class="dashboard__navigation__list">
             <li>
-                <a class="navigation__list__link" href='/'>Home</a>
+                <a class="dashboard__navigation__list__link" href='/' aria-label="Home">Home</a>
             </li>
             <li>
-                <a class="navigation__list__link" href="/dashboard/<%= user.username %>/posts/new-post">New Post</a>
+                <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts/new-post"
+                    aria-label="New Post">New Post</a>
             </li>
             <li>
-                <a class="navigation__list__link" href="/dashboard/<%= user.username %>/posts">List Posts</a>
+                <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts"
+                    aria-label="List Posts">List Posts</a>
+            </li>
+            <li>
+                <a class="dashboard__navigation__list__link" href="/auth/logout" aria-label="Logout">Logout</a>
             </li>
         </ul>
     </nav>
 
+    <div class="dashboard__content">
+        <div>
+            <% if (user.displayName !== (undefined || null)) { %>
+            <h1 class="dashboard__content__title">Welcome, <%= user.displayName %>!</h1>
+            <% } else { %>
+            <h1 class="dashboard__content__title">Welcome, <%= user.username %>!</h1>
+            <% } %>
+            <p class="dashboard__content__description">What would you like to do today?</p>
+        </div>
+
+        <div class="dashboard__content__posts">
+            <h2 class="dashboard__content__posts__title">Latest Posts</h2>
+
+            <% if (latestPosts.length > 0) { %>
+            <ul class="dashboard__content__posts__list">
+                <% latestPosts.forEach(post => { %>
+                <li class="dashboard__content__posts__list-item">
+                    <a class="dashboard__content__posts__list-item__link" href=""
+                        aria-label="View Post"><%= latestPosts.title %>
+                    </a>
+                    <p class="dashboard__content__posts__list-item__description"><%= latestPosts.content %></p>
+                    <span class="dashboard__content__posts__list-item__views">Views:
+                        <%= latestPosts.totalViews %></span>
+                </li>
+                <% }) %>
+            </ul>
+            <% } else { %>
+            <div class="dashboard__content__posts__empty">
+                <p class="dashboard__content__posts__empty-text">No posts found...</p>
+                <a class="dashboard__content__posts__empty-link" href="/dashboard/<%= user.username %>/posts/new-post"
+                    aria-label="New Post">Start posting now!</a>
+            </div>
+            <% }%>
+
+        </div>
+    </div>
 </section>
