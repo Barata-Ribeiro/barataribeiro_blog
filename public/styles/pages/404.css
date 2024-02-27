@@ -30,7 +30,7 @@
 
 .error404__description-link {
     position: relative;
-    background: #fff;
+    background: var(--color-6);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border: 0.125rem solid var(--color-1);

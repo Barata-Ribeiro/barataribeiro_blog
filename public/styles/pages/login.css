@@ -26,7 +26,7 @@
 
 .register-account__formbuilder-required,
 .login-account__formbuilder-required {
-    color: red;
+    color: var(--color-7);
     font-size: 1.6rem;
 }
 
@@ -48,7 +48,7 @@
 
 .login-account__button-submit {
     position: relative;
-    background: #fff;
+    background: var(--color-6);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border: 0.125rem solid var(--color-1);

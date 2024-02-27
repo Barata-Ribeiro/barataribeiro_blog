@@ -4,6 +4,26 @@
     --color-3: #476375;
     --color-4: #709eb6;
     --color-5: #9ee3ff;
+
+    --color-6: #fafafa;
+
+    --color-7: #dc2626;
+    --color-8: #fca5a5;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-1: #9ee3ff;
+        --color-2: #709eb6;
+        --color-3: #476375;
+        --color-4: #23323d;
+        --color-5: #00050f;
+
+        --color-6: #121212;
+
+        --color-7: #b22222;
+        --color-8: #e57373;
+    }
 }
 
 html {
@@ -47,12 +67,12 @@ body {
     max-width: -webkit-max-content;
     max-width: -moz-max-content;
     max-width: max-content;
-    color: #dc2626;
+    color: var(--color-7);
     margin-top: 1rem;
     cursor: default;
 }
 
 .form__error-message:hover {
     background-color: var(--color-1);
-    color: #fca5a5;
+    color: var(--color-8);
 }
