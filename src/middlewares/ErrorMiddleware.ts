@@ -10,22 +10,20 @@ import { ApiError } from "./helpers/ApiErrors"
  * @param _req - The Express request object.
  * @param res - The Express response object.
  * @param _next - The Express next function.
- * @returns The Express response object.
+ * @returns void, but it sends a response to the client rendering the error page.
  */
-const errorMiddleware = (
-    error: Error & Partial<ApiError>,
-    _req: Request,
-    res: Response,
-    _next: NextFunction
-): Response => {
+const errorMiddleware = (error: Error & Partial<ApiError>, _req: Request, res: Response, _next: NextFunction) => {
     const statusCode = error.status ?? 500
     const message = error.status ? error.message : "Internal Server Error"
 
-    return res.status(statusCode).json({
-        status: "error",
-        code: statusCode,
+    const data = {
+        title: `${statusCode} - Error`,
+        description: message,
+        statusCode,
         message
-    })
+    }
+
+    return res.status(statusCode).render("pages/errors/error", data)
 }
 
 export default errorMiddleware
