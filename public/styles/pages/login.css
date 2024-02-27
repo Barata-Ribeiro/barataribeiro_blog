@@ -93,12 +93,6 @@
     align-items: center;
     margin-top: 2rem;
     text-align: center;
-    cursor: default;
-}
-
-.login-account__register-text:hover {
-    background-color: var(--color-1);
-    color: var(--color-5);
 }
 
 .login-account__register-link {

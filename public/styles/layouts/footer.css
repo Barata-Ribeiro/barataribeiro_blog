@@ -11,11 +11,11 @@
     margin: 0 auto;
 }
 
-.footer__copy {
-    cursor: default;
+.footer__copy-link {
+    color: var(--color-1);
 }
 
-.footer__copy:hover,
+.footer__copy-link:hover,
 .footer__link:hover {
     background-color: var(--color-1);
     color: var(--color-5);

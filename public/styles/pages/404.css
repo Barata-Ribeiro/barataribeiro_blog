@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    cursor: default;
 }
 
 .error404__title {
@@ -20,12 +19,6 @@
     text-align: center;
     gap: 1rem;
     font-size: 2.4rem;
-}
-
-.error404__description-subtitle:hover,
-.error404__description-text:hover {
-    background-color: var(--color-1);
-    color: var(--color-5);
 }
 
 .error404__description-link {
