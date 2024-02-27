@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import { Request, Response } from "express"
 import { sign } from "jsonwebtoken"
 import mongoose from "mongoose"
+import { InternalServerError } from "../../../middlewares/helpers/ApiErrors"
 import User from "../models/User"
 
 export class AuthController {
@@ -103,7 +104,7 @@ export class AuthController {
 
     async logout(req: Request, res: Response) {
         res.clearCookie("authToken")
-
+        
         req.session.user = {
             data: null,
             isLoggedIn: false
@@ -112,11 +113,12 @@ export class AuthController {
         req.session.destroy((err) => {
             if (err) {
                 console.error(err)
-                return res.status(500).json({ error: "Failed to destroy session." })
+                throw new InternalServerError("Failed to destroy session.")
             }
-
+            
             res.locals.user = null
-
+            res.clearCookie("connect.sid")
+            
             return res.status(302).redirect("/auth/login")
         })
     }
