@@ -21,6 +21,7 @@ import { connectToDatabase, connection } from "./api/v1/config/database"
 import authRoutes from "./api/v1/routes/AuthRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
+import endpointUsers from "./endpoints/dashboard"
 
 // Custom Middleware
 import SetCurrentYear from "./middlewares/CurrentYear"
@@ -96,10 +97,11 @@ const startServer = async () => {
             res.render("index", { title: "Express", description: "Welcome to Express" })
         })
         app.use("/auth", endpointAuth)
+        app.use("/dashboard", endpointUsers)
 
         // ERRORS
         app.use((_req, res) =>
-            res.status(404).render("pages/404", { title: "404 - Not Found", description: "Page not found" })
+            res.status(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
         )
 
         app.use(errorMiddleware)
