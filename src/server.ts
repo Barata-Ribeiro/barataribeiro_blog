@@ -88,6 +88,11 @@ const startServer = async () => {
         app.set("views", path.join(__dirname, "views"))
         app.set("view engine", "ejs")
 
+        app.use((req, res, next) => {
+            if(req.session.user?.isLoggedIn) res.locals.user = req.session.user.data
+            next()
+        })
+
         // API ENDPOINTS
         app.use("/auth", authRoutes)
         app.use("/users", usersRoutes)
@@ -99,7 +104,7 @@ const startServer = async () => {
         app.use("/auth", endpointAuth)
         app.use("/dashboard", endpointUsers)
 
-        // ERRORS
+        // PAGE 404
         app.use((_req, res) =>
             res.status(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
         )

@@ -1,7 +1,13 @@
 <header class="header">
     <nav class="header__nav">
-        <a href="/"><h1 class="header__logo">Barata-Ribeiro</h1></a>
+        <a href="/">
+            <h1 class="header__logo">Barata-Ribeiro</h1>
+        </a>
         <%- include('./search.ejs') %>
-        <a href="/auth/login" class="header__button">Login</a>
+        <% if (locals.user) { %>
+            <a href="/dashboard/<%= locals.user.username %>" class="header__button">Dashboard</a>
+        <% } else { %>
+            <a href="/auth/login" class="header__button">Login</a>
+        <% } %>
     </nav>
 </header>
