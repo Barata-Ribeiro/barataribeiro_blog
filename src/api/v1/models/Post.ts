@@ -9,11 +9,12 @@ const PostSchema = new Schema(
             index: true
         },
         content: {
-            type: Text,
+            type: String,
             required: [true, "Content is required"]
         },
         author: { type: Schema.Types.ObjectId, ref: "User" },
-        tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }]
+        tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+        totalViews: { type: Number, default: 0 }
     },
     { timestamps: true }
 )
