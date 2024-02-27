@@ -8,5 +8,6 @@
 
 /* Pages */
 @import url(./pages/404.css);
+@import url(./pages/error.css);
 @import url(./pages/login.css);
 @import url(./pages/register.css);
