@@ -22,12 +22,6 @@
     font-size: 2.4rem;
 }
 
-.error-page__description-subtitle:hover,
-.error-page__description-text:hover {
-    background-color: var(--color-1);
-    color: var(--color-5);
-}
-
 .error-page__description-link {
     position: relative;
     background: #fff;

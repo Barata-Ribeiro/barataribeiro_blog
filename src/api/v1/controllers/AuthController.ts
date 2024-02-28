@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { sign } from "jsonwebtoken"
 import mongoose from "mongoose"
 import { InternalServerError } from "../../../middlewares/helpers/ApiErrors"
@@ -102,9 +102,9 @@ export class AuthController {
         }
     }
 
-    async logout(req: Request, res: Response) {
+    async logout(req: Request, res: Response, next: NextFunction) {
         res.clearCookie("authToken")
-        
+
         req.session.user = {
             data: null,
             isLoggedIn: false
@@ -113,12 +113,12 @@ export class AuthController {
         req.session.destroy((err) => {
             if (err) {
                 console.error(err)
-                throw new InternalServerError("Failed to destroy session.")
+                return next(new InternalServerError("Failed to destroy session."))
             }
-            
+
             res.locals.user = null
             res.clearCookie("connect.sid")
-            
+
             return res.status(302).redirect("/auth/login")
         })
     }
