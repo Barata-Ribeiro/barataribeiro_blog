@@ -5,10 +5,9 @@
 @import url(./layouts/header.css);
 @import url(./layouts/search.css);
 @import url(./layouts/footer.css);
+@import url(./layouts/form.css);
 
 /* Pages */
 @import url(./pages/404.css);
 @import url(./pages/error.css);
-@import url(./pages/login.css);
-@import url(./pages/register.css);
 @import url(./pages/dashboard.css);

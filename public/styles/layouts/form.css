@@ -1,16 +1,43 @@
-.register-account__title {
-    font-size: 3.6rem;
-    color: var(--color-1);
-    margin-bottom: 2rem;
-}
-
-.register-account__rendered-form {
+.form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.register-account__rendered-form label {
+.form__title::before {
+    content: "█ ";
+}
+
+.form__title {
+    font-size: 3.6rem;
+    color: var(--color-1);
+    margin-bottom: 2rem;
+}
+
+.form__fieldset-wrapper {
+    padding: 1rem;
+    border: 0.125rem solid var(--color-4);
+    border-radius: 0.3rem;
+}
+
+.form__fieldset-wrapper > *:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.form__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: fit-content;
+}
+
+.form__label {
     display: block;
     margin-bottom: 0.5rem;
     max-width: -webkit-max-content;
@@ -19,30 +46,38 @@
     cursor: default;
 }
 
-.register-account__rendered-form label:hover {
+.form__label:hover {
     background-color: var(--color-1);
     color: var(--color-5);
 }
 
-.register-account__input-username,
-.register-account__input-email,
-.register-account__input-password {
+.form__input,
+.form__textarea {
     width: 100%;
     padding: 0.75rem;
     border: 0.125rem solid var(--color-4);
     border-radius: 0.3rem;
-    font-family: monospace;
     font-size: 1.4rem;
+    color: var(--color-1);
+    background-color: var(--color-6);
 }
 
-.register-account__input-username:focus,
-.register-account__input-email:focus,
-.register-account__input-password:focus {
+.form__textarea {
+    resize: none;
+}
+
+.form__textarea::placeholder,
+.form__input::placeholder {
+    color: var(--color-3);
+}
+
+.form__textarea:focus,
+.form__input:focus {
     border-color: var(--color-5);
     outline: none;
 }
 
-.register-account__button-submit {
+.form__submit {
     position: relative;
     background: var(--color-6);
     -webkit-backface-visibility: hidden;
@@ -68,36 +103,56 @@
     transition: transform 0.2s;
 }
 
-.register-account__button-submit:not(:disabled):hover {
+.form__submit:hover:not(:disabled):hover {
     background-color: var(--color-1);
     color: var(--color-5);
     transform: scale(1.05);
 }
 
-.register-account__button-submit:not(:disabled):hover:active {
+.form__submit:active:not(:disabled):hover:active {
     transform: scale(1.05) translateY(0.125rem);
 }
 
-.register-account__button-submit:focus {
+.form__submit:focus {
     outline: 0 solid transparent;
 }
 
-.register-account__login {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    text-align: center;
+.form__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-.register-account__login-link {
+.form__error-message {
+    display: block;
+    max-width: -webkit-max-content;
+    max-width: -moz-max-content;
+    max-width: max-content;
+    color: var(--color-7);
+    margin-top: 1rem;
+    cursor: default;
+}
+
+.form__error-message:hover {
+    background-color: var(--color-1);
+    color: var(--color-8);
+}
+
+.form__required {
+    color: var(--color-7);
+    font-size: 1.6rem;
+}
+
+.form__footer-description {
+    margin-top: 1.5rem;
+}
+
+.form__link {
     color: var(--color-4);
     text-decoration: none;
     cursor: pointer;
 }
 
-.register-account__login-link:hover {
+.form__link:hover {
     background-color: var(--color-1);
     color: var(--color-5);
     text-decoration: underline;

@@ -1,37 +1,35 @@
 <section id="register-account">
-    <h1 class="register-account__title">Register</h1>
+    <h1 class=" form__title">Register</h1>
 
-    <form class="register-account__rendered-form" action="/auth/register" method="POST">
-        <div id="register-account__field-username">
-            <label for="username">
+    <form id="registerForm" class="form" action="/auth/register" method="POST">
+        <fieldset class="form__fieldset">
+            <label for="username" class="form__label">
                 Username
-                <span class="register-account__formbuilder-required">*</span>
+                <span class="form__required">*</span>
             </label>
-            <input type="text" placeholder="Username" autocomplete="username" class="register-account__input-username"
-                name="username" access="false" id="username" required="required" aria-required="true"
-                aria-label="Username" />
-        </div>
-        <div id="register-account__field-email">
-            <label for="email">
+            <input type="text" placeholder="Username" autocomplete="username" class="form__input" name="username"
+                id="username" required aria-required="true" aria-label="Username" />
+        </fieldset>
+        <div class="form__fieldset">
+            <label for="email" class="form__label">
                 Email
-                <span class="register-account__formbuilder-required">*</span>
+                <span class="form__required">*</span>
             </label>
-            <input type="email" autocomplete="email" placeholder="contact@example.com"
-                class="register-account__input-email" name="email" access="false" id="email" required="required"
-                aria-required="true" aria-label="Email" />
+            <input type="email" placeholder="contact@example.com" autocomplete="email" class="form__input" name="email"
+                id="email" required aria-required="true" aria-label="Email" />
         </div>
-        <div id="register-account__field-password">
-            <label for="password">
+
+        <fieldset class="form__fieldset">
+            <label for="password" class="form__label">
                 Password
-                <span class="register-account__formbuilder-required">*</span>
+                <span class="form__required">*</span>
             </label>
-            <input type="password" placeholder="ex: 123456" autocomplete="new-password"
-                class="register-account__input-password" name="password" access="false" id="password"
-                required="required" aria-required="true" aria-label="Password" />
-        </div>
-        <div id="register-account__field">
-            <button type="submit" class="register-account__button-submit" name="register-account__button-submit"
-                access="false" id="register-account__button-submit" aria-label="Sign Up">
+            <input type="password" placeholder="ex: 123456" autocomplete="new-password" class="form__input"
+                name="password" id="password" required aria-required="true" aria-label="Password" />
+        </fieldset>
+
+        <div class="form__group">
+            <button type="submit" class="form__submit" name="registerButton" id="registerButton" aria-label="Sign Up">
                 Sign Up
             </button>
             <% if (error) { %>
@@ -41,19 +39,18 @@
         </div>
     </form>
 
-    <span class="register-account__login">
-        <p class="register-account__login-text">Already have an account?</p> <a href="/auth/login"
-            class="register-account__login-link">Login</a>
-        </s>
+    <p class="form__footer-description">Already have an account? <a href="/auth/login" class="form__link">Login</a></p>
+
+
 </section>
 <script nonce="<%= nonce %>">
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const formEl = document.querySelector(".register-account__rendered-form");
-        const buttonEl = document.getElementById("register-account__button-submit");
+    document.addEventListener('DOMContentLoaded', () => {
+        const formEl = document.getElementById("registerForm");
+        const buttonEl = document.getElementById("registerButton");
 
         formEl.addEventListener("submit", function() {
-            buttonEl.setAttribute("disabled", true);
-            buttonEl.innerHTML = "Registering...";
+            buttonEl.disabled = true;
+            buttonEl.textContent = "Registering...";
         });
     });
 </script>
