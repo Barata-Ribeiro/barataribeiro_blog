@@ -46,12 +46,14 @@
             class="register-account__login-link">Login</a>
         </s>
 </section>
-<script>
-    const formEl = document.querySelector(".register-account__rendered-form");
-    const buttonEl = document.getElementById("register-account__button-submit");
+<script nonce="<%= nonce %>">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const formEl = document.querySelector(".register-account__rendered-form");
+        const buttonEl = document.getElementById("register-account__button-submit");
 
-    formEl.addEventListener("submit", function() {
-        buttonEl.setAttribute("disabled", true)
-        buttonEl.textContent = 'Loading...';
+        formEl.addEventListener("submit", function() {
+            buttonEl.setAttribute("disabled", true);
+            buttonEl.innerHTML = "Registering...";
+        });
     });
 </script>

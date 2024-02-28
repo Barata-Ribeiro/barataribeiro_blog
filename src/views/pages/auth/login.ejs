@@ -35,12 +35,14 @@
         <a href="/auth/register" class="login-account__register-link">Register</a>
     </span>
 </section>
-<script>
-    const formEl = document.querySelector(".login-account__rendered-form");
-    const buttonEl = document.getElementById("login-account__button-submit");
+<script nonce="<%= nonce %>">
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const formEl = document.querySelector(".login-account__rendered-form");
+        const buttonEl = document.getElementById("login-account__button-submit");
 
-    formEl.addEventListener('submit', function() {
-        buttonEl.setAttribute("disabled", true)
-        buttonEl.textContent = 'Loading...';
+        formEl.addEventListener('submit', function() {
+            buttonEl.setAttribute("disabled", true);
+            buttonEl.innerHTML = "Logging in...";
+        });
     });
 </script>

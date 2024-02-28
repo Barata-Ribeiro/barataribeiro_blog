@@ -72,7 +72,18 @@ const startServer = async () => {
                 })
             })
         )
-        app.use(helmet({ crossOriginResourcePolicy: false }))
+        app.use((_req, res, next) => (res.locals.nonce = uuidv4()) && next())
+        app.use(
+            helmet({
+                crossOriginResourcePolicy: false,
+                contentSecurityPolicy: {
+                    directives: {
+                        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+                        "script-src": ["'self'", (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`]
+                    }
+                }
+            })
+        )
         app.use(helmet.noSniff())
         app.use(helmet.xssFilter())
         app.use(helmet.ieNoOpen())
@@ -89,7 +100,7 @@ const startServer = async () => {
         app.set("view engine", "ejs")
 
         app.use((req, res, next) => {
-            if(req.session.user?.isLoggedIn) res.locals.user = req.session.user.data
+            if (req.session.user?.isLoggedIn) res.locals.user = req.session.user.data
             next()
         })
 

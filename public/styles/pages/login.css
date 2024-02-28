@@ -86,6 +86,11 @@
     outline: 0 solid transparent;
 }
 
+.login-account__button-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .login-account__register {
     display: flex;
     gap: 0.5rem;
