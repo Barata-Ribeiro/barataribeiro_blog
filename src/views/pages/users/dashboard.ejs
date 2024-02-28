@@ -1,26 +1,27 @@
 <section class="dashboard">
-    <nav class="dashboard__navigation">
+    <nav class="dashboard__navigation" role="navigation" aria-label="Main Navigation">
         <ul class="dashboard__navigation__list">
             <li>
                 <a class="dashboard__navigation__list__link" href='/' aria-label="Home">Home</a>
             </li>
             <li>
                 <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts/new-post"
-                    aria-label="New Post">New Post</a>
+                    aria-label="Create a New Post">New Post</a>
             </li>
             <li>
                 <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts"
-                    aria-label="List Posts">List Posts</a>
+                    aria-label="View Your Posts">List Posts</a>
             </li>
             <li>
-                <a class="dashboard__navigation__list__link" href="/auth/logout" aria-label="Logout">Logout</a>
+                <a class="dashboard__navigation__list__link" href="/auth/logout"
+                    aria-label="Logout of Your Account">Logout</a>
             </li>
         </ul>
     </nav>
 
     <div class="dashboard__content">
         <div>
-            <% if (user.displayName !== (undefined || null)) { %>
+            <% if (user.displayName && user.displayName.trim().length > 0) { %>
             <h1 class="dashboard__content__title">Welcome, <%= user.displayName %>!</h1>
             <% } else { %>
             <h1 class="dashboard__content__title">Welcome, <%= user.username %>!</h1>
@@ -32,15 +33,13 @@
             <h2 class="dashboard__content__posts__title">Latest Posts</h2>
 
             <% if (latestPosts.length > 0) { %>
-            <ul class="dashboard__content__posts__list">
+            <ul class="dashboard__content__posts__list" role="list">
                 <% latestPosts.forEach(post => { %>
-                <li class="dashboard__content__posts__list-item">
-                    <a class="dashboard__content__posts__list-item__link" href=""
-                        aria-label="View Post"><%= latestPosts.title %>
-                    </a>
-                    <p class="dashboard__content__posts__list-item__description"><%= latestPosts.content %></p>
-                    <span class="dashboard__content__posts__list-item__views">Views:
-                        <%= latestPosts.totalViews %></span>
+                <li class="dashboard__content__posts__list-item" role="listitem">
+                    <a class="dashboard__content__posts__list-item__link" href="/posts/<%= post.id %>"
+                        aria-label="View Post: <%= post.title %>"><%= post.title %></a>
+                    <p class="dashboard__content__posts__list-item__description"><%= post.content %></p>
+                    <span class="dashboard__content__posts__list-item__views">Views: <%= post.totalViews %></span>
                 </li>
                 <% }) %>
             </ul>
@@ -48,10 +47,54 @@
             <div class="dashboard__content__posts__empty">
                 <p class="dashboard__content__posts__empty-text">No posts found...</p>
                 <a class="dashboard__content__posts__empty-link" href="/dashboard/<%= user.username %>/posts/new-post"
-                    aria-label="New Post">Start posting now!</a>
+                    aria-label="Create Your First Post">Start posting now!</a>
             </div>
             <% }%>
 
+            <article class="dashboard__content__user-profile" role="article" aria-labelledby="userProfileTitle">
+                <h2 id="userProfileTitle" class="dashboard__content__user-profile__title">User Profile</h2>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="usernameLabel">
+                    <p id="usernameLabel" class="dashboard__content__user-profile__details__label">Username:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="usernameLabel">
+                        <%= user.username %></p>
+                </div>
+                <% if (user.displayName && user.displayName.trim().length > 0) { %>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="displayNameLabel">
+                    <p id="displayNameLabel" class="dashboard__content__user-profile__details__label">Display Name:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="displayNameLabel">
+                        <%= user.displayName %></p>
+                </div>
+                <% } %>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="emailLabel">
+                    <p id="emailLabel" class="dashboard__content__user-profile__details__label">Email:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="emailLabel">
+                        <%= user.email %></p>
+                </div>
+                <% if (user.bio && user.bio.trim().length > 0) { %>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="bioLabel">
+                    <p id="bioLabel" class="dashboard__content__user-profile__details__label">Bio:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="bioLabel">
+                        <%= user.bio %></p>
+                </div>
+                <% } %>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="roleLabel">
+                    <p id="roleLabel" class="dashboard__content__user-profile__details__label">Role:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="roleLabel">
+                        <%= user.role %></p>
+                </div>
+                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="dateJoinedLabel">
+                    <p id="dateJoinedLabel" class="dashboard__content__user-profile__details__label">Date Joined:</p>
+                    <p class="dashboard__content__user-profile__details__value" aria-labelledby="dateJoinedLabel">
+                        <%= new Date(user.createdAt).toDateString() %>
+                    </p>
+                </div>
+                <p class="dashboard__content__edit-profile">
+                    Do you wish to edit your profile?
+                    <a class="dashboard__content__edit-profile__link"
+                        href="/dashboard/<%= user.username %>/edit-account" aria-label="Edit Profile">Edit here</a>
+                </p>
+            </article>
         </div>
+    </div>
     </div>
 </section>
