@@ -40,4 +40,29 @@ routes.get("/:username", authMiddleware, async (req: Request, res: Response, nex
     }
 })
 
+routes.get("/:username/edit-account", authMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+    const { username } = req.params
+    if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
+
+    if (username !== req.session.user?.data?.username)
+        return next(new ForbiddenError("You are not allowed to access this page."))
+
+    try {
+        const user = await User.findOne({ username }).select("-posts")
+        if (!user) return next(new NotFoundError("User not found. Try to log into your account again."))
+
+        const data = {
+            title: `Edit Account - ${user.username}`,
+            description: `Edit your account, ${user.username}!`,
+            user,
+            error: null
+        }
+
+        return res.render("pages/users/edit-account", data)
+    } catch (error) {
+        console.error(error)
+        return next(new InternalServerError("An error occurred while trying to log into your account."))
+    }
+})
+
 export default routes

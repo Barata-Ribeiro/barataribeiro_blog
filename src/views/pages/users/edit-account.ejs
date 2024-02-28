@@ -1,0 +1,71 @@
+<section class="edit-account">
+    <h1 class="form__title">Edit Account</h1>
+
+    <form id="editForm" action="/dashboard/<%= user.username %>/edit-account" method="POST" class="form">
+        <fieldset class="form__fieldset">
+            <label for="username" class="form__label">Username</label>
+            <input type="text" id="username" name="username" placeholder="<%= user.username %>" autocomplete="username"
+                aria-label="Username" class="form__input">
+        </fieldset>
+
+        <fieldset class="form__fieldset">
+            <label for="displayName" class="form__label">Display Name</label>
+            <input type="text" id="displayName" name="displayName"
+                placeholder="<%= user.displayName ? user.displayName : 'Create a display name' %>"
+                aria-label="Display Name" class="form__input">
+        </fieldset>
+
+        <fieldset class="form__fieldset">
+            <label for="email" class="form__label">Email</label>
+            <input type="email" id="email" name="email" placeholder="<%= user.email %>" aria-label="Email"
+                autocomplete="email" class="form__input">
+        </fieldset>
+
+        <div class="form__fieldset-wrapper">
+            <fieldset class="form__fieldset">
+                <label for="newPassword" class="form__label">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" aria-label="New Password"
+                    placeholder="Your new password" autocomplete="new-password" class="form__input">
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="confirmPassword" class="form__label">Confirm New Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" aria-label="Confirm New Password"
+                    placeholder="Confirm your new password" class="form__input">
+            </fieldset>
+        </div>
+
+        <fieldset class="form__fieldset">
+            <label for="bio" class="form__label">Bio</label>
+            <textarea id="bio" name="bio" aria-label="Bio" class="form__textarea"
+                placeholder="<%= user.bio ? user.bio : 'Type in what is on your mind...' %>"></textarea>
+        </fieldset>
+
+        <fieldset class="form__fieldset">
+            <label for="currentPassword" class="form__label">Current Password <span
+                    class="form__required">*</span></label>
+            <input type="password" id="currentPassword" name="currentPassword" aria-label="Current Password"
+                placeholder="Your current password" autocomplete="current-password" required aria-required="true"
+                class="form__input">
+        </fieldset>
+
+        <div class="form__group">
+            <button id="editButton" name="editButton" type="submit" class="form__submit">Save Changes</button>
+            <% if (error) { %>
+            <span id="error-message" role="alert" aria-label="<%= error %>"
+                class="form__error-message"><%= error %></span>
+            <% } %>
+        </div>
+    </form>
+</section>
+<script nonce="<%= nonce %>">
+    document.addEventListener('DOMContentLoaded', () => {
+        const formEl = document.getElementById("editForm");
+        const buttonEl = document.getElementById("editButton");
+
+        formEl.addEventListener('submit', function() {
+            buttonEl.disabled = true;
+            buttonEl.textContent = "Saving...";
+        });
+    });
+</script>
