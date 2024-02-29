@@ -8,7 +8,7 @@ export interface User extends mongoose.Document {
     displayName?: string
     bio?: string
     role: "user" | "admin"
-    posts?: mongoose.Schema.Types.ObjectId[]
+    posts?: mongoose.Types.ObjectId[]
     hashPassword(password: string): string
     comparePassword(candidatePassword: string): boolean
 }
