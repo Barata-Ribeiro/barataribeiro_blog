@@ -1,0 +1,48 @@
+<section class="new-post">
+    <%- include("../../partials/users/user-header.ejs") %>
+
+
+    <div>
+        <h1 class="form__title">New Post</h1>
+
+        <form id="newPostForm" action="/dashboard/<%= user.username %>/posts/new-post" method="POST" class="form">
+            <fieldset class="form__fieldset">
+                <label for="title" class="form__label">Title</label>
+                <input type="text" id="title" name="title" placeholder="Post Title" aria-label="Title"
+                    class="form__input" required>
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="content" class="form__label">Content</label>
+                <textarea id="content" name="content" aria-label="Content" class="form__textarea"
+                    placeholder="Write your post content here..." required></textarea>
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="tags" class="form__label">Tags</label>
+                <input type="text" id="tags" name="tags" placeholder="Add tags separated by commas" aria-label="Tags"
+                    class="form__input">
+            </fieldset>
+
+            <div class="form__group">
+                <button id="createPostButton" name="createPostButton" type="submit" class="form__submit">Publish
+                    Post</button>
+                <% if (error) { %>
+                <span id="error-message" role="alert" aria-label="<%= error %>"
+                    class="form__error-message"><%= error %></span>
+                <% } %>
+            </div>
+        </form>
+    </div>
+</section>
+<script nonce="<%= nonce %>">
+    document.addEventListener('DOMContentLoaded', () => {
+        const formEl = document.getElementById("newPostForm");
+        const buttonEl = document.getElementById("createPostButton");
+
+        formEl.addEventListener('submit', function() {
+            buttonEl.disabled = true;
+            buttonEl.textContent = "Publishing...";
+        });
+    });
+</script>

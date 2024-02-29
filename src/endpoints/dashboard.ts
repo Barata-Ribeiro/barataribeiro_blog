@@ -65,4 +65,23 @@ routes.get("/:username/edit-account", authMiddleware, async (req: Request, res: 
     }
 })
 
+routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+    const { username } = req.params
+    if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
+
+    if (username !== req.session.user?.data?.username)
+        return next(new ForbiddenError("You are not allowed to access this page."))
+
+    res.locals.user = req.session.user?.data    
+
+    const data = {
+        title: `New Post - ${username}`,
+        description: `Create a new post, ${username}! Don't forget to read the rules before posting.`,
+        user: res.locals.user,
+        error: null
+    }
+
+    return res.render("pages/users/new-post", data)
+})
+
 export default routes
