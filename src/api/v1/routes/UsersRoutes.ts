@@ -5,7 +5,7 @@ import { UserController } from "../controllers/UserController"
 const routes = Router()
 const userController = new UserController()
 
-routes.put("/dashboard/:username", authMiddleware, (req, res, next) =>
+routes.post("/:username/edit-account", authMiddleware, (req, res, next) =>
     userController.updateAccount(req, res).catch(next)
 )
 

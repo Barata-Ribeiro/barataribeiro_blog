@@ -106,7 +106,7 @@ const startServer = async () => {
 
         // API ENDPOINTS
         app.use("/auth", authRoutes)
-        app.use("/users", usersRoutes)
+        app.use("/dashboard", usersRoutes)
 
         // VIEW ENDPOINTS
         app.get("/", function (_req, res) {
