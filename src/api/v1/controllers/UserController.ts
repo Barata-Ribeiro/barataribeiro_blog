@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { UserEditRequestBody } from "../../../interfaces/UserInterfaces"
+import { UserCreatePostRequestBody, UserEditRequestBody } from "../../../interfaces/UserInterfaces"
 import { User } from "../models/User"
 import { UserService } from "../services/UserService"
 export class UserController {
@@ -52,6 +52,39 @@ export class UserController {
         }
 
         return res.render("pages/users/edit-account", {
+            ...data,
+            error: "An unexpected error occurred."
+        })
+    }
+
+    async createPost(req: Request, res: Response) {
+        const sessionUser = req.session.user?.data as User
+        if (!req.session.user) return res.redirect("/auth/logout")
+
+        const data = {
+            title: `Edit Account - ${sessionUser.username}`,
+            description: `Edit your account, ${sessionUser.username}!`,
+            user: sessionUser,
+            error: null
+        }
+
+        const { username } = req.params
+        if (!username)
+            return res.render("pages/users/new-post", {
+                ...data,
+                error: "Username is missing. Try to log into your account again."
+            })
+
+        const requestingBody = req.body as UserCreatePostRequestBody
+        if (!requestingBody)
+            return res.render("pages/users/new-post", { ...data, error: "You have not provided any data." })
+
+        const response = await this.userService.createPost(username, requestingBody)
+        if (response.error) return res.render("pages/users/new-post", { ...data, error: response.error })
+
+        if (response.post) return res.redirect(`/posts/${response.post.id}/${response.post.title}`)
+
+        return res.render("pages/users/new-post", {
             ...data,
             error: "An unexpected error occurred."
         })

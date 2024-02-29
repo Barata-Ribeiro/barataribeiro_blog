@@ -7,3 +7,9 @@ export interface UserEditRequestBody {
     bio?: string
     currentPassword?: string
 }
+
+export interface UserCreatePostRequestBody {
+    title: string
+    content: string
+    tags: string
+}

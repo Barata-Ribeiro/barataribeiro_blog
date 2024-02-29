@@ -1,4 +1,6 @@
-import { UserEditRequestBody } from "../../../interfaces/UserInterfaces"
+import { UserCreatePostRequestBody, UserEditRequestBody } from "../../../interfaces/UserInterfaces"
+import Post from "../models/Post"
+import Tag from "../models/Tag"
 import User from "../models/User"
 
 export class UserService {
@@ -52,6 +54,50 @@ export class UserService {
             if (!savedUser) return { error: "Failed to save user." }
 
             return { user: savedUser, error: null }
+        } catch (error) {
+            console.error(error)
+            return { error: "An error occurred while updating the account." }
+        }
+    }
+
+    async createPost(username: string, requestingBody: UserCreatePostRequestBody) {
+        const { title, content, tags } = requestingBody
+        if (!title || !content || !tags) return { error: "You must provide a title, content, and tags." }
+
+        try {
+            const user = await User.findOne({ username })
+            if (!user) return { error: "User not found." }
+
+            if (!user.posts) user.posts = []
+
+            const tagsArray = tags.split(", ").map((tag) => tag.trim())
+            const tagsIds = await Promise.all(
+                tagsArray.map(async (tagName) => {
+                    let tag = await Tag.findOne({ name: tagName })
+                    if (!tag) tag = await Tag.create({ name: tagName })
+
+                    return tag._id
+                })
+            )
+
+            const post = await Post.create({ title, content, author: user._id, tags: tagsIds })
+            if (!post) return { error: "Failed to create the post." }
+
+            const associateTagsToPost = await Promise.all(
+                tagsIds.map(async (tagId) => {
+                    const tag = await Tag.findById(tagId)
+                    if (!tag) return { error: "Failed to associate tags to the post." }
+
+                    tag.posts.push(post._id)
+                    return tag.save()
+                })
+            )
+            if (associateTagsToPost.some((tag) => !tag)) return { error: "Failed to associate tags to the post." }
+
+            user.posts.push(post._id)
+            await user.save()
+
+            return { post, error: null }
         } catch (error) {
             console.error(error)
             return { error: "An error occurred while updating the account." }
