@@ -100,7 +100,9 @@ const startServer = async () => {
         app.set("view engine", "ejs")
 
         app.use((req, res, next) => {
-            if (req.session.user?.isLoggedIn) res.locals.user = req.session.user.data
+            const isLoggedIn = req.session.user?.isLoggedIn
+            if (isLoggedIn) res.locals.user = req.session.user?.data
+            else res.locals.user = null
             next()
         })
 
