@@ -1,0 +1,19 @@
+<nav class="dashboard__navigation" role="navigation" aria-label="Main Navigation">
+    <ul class="dashboard__navigation__list">
+        <li>
+            <a class="dashboard__navigation__list__link" href='/' aria-label="Home">Home</a>
+        </li>
+        <li>
+            <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts/new-post"
+                aria-label="Create a New Post">New Post</a>
+        </li>
+        <li>
+            <a class="dashboard__navigation__list__link" href="/dashboard/<%= user.username %>/posts"
+                aria-label="View Your Posts">List Posts</a>
+        </li>
+        <li>
+            <a class="dashboard__navigation__list__link" href="/auth/logout"
+                aria-label="Logout of Your Account">Logout</a>
+        </li>
+    </ul>
+</nav>
