@@ -1,0 +1,11 @@
+<section>
+    <h1><%= post.title %></h1>
+    <article id="post-content">
+        <%- post.content %>
+    </article>
+    <p><%= post.created_at %></p>
+    <p><%= post.updated_at %></p>
+    <a href="/posts/<%= post.id %>/edit">Edit</a>
+    <a href="/posts/<%= post.id %>/delete">Delete</a>
+    <a href="/posts">Back</a>
+</section>

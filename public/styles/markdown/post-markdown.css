@@ -1,0 +1,73 @@
+#post-content h1,
+#post-content h2,
+#post-content h3,
+#post-content h4,
+#post-content h5,
+#post-content h6 {
+    color: #333;
+    font-family: "Helvetica", sans-serif;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#post-content h1 {
+    font-size: 2.5em; /* Adjust the font size for h1 */
+}
+
+#post-content h2 {
+    font-size: 2em; /* Adjust the font size for h2 */
+}
+
+#post-content h3 {
+    font-size: 1.75em; /* Adjust the font size for h3 */
+}
+
+#post-content h4 {
+    font-size: 1.5em; /* Adjust the font size for h4 */
+}
+
+#post-content h5 {
+    font-size: 1.25em; /* Adjust the font size for h5 */
+}
+
+#post-content h6 {
+    font-size: 1em; /* Adjust the font size for h6 */
+}
+
+#post-content p {
+    color: #666;
+    font-family: "Arial", sans-serif;
+    line-height: 1.6;
+}
+
+#post-content a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+#post-content pre {
+    background-color: #f7f7f7;
+    border: 1px solid #e1e1e8;
+    padding: 10px;
+    overflow: auto;
+    line-height: 1.4;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+}
+
+#post-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+#post-content ul,
+#post-content ol {
+    padding-left: 20px;
+}
+
+#post-content blockquote {
+    border-left: 4px solid #ccc;
+    padding: 0 15px;
+    color: #777;
+    font-style: italic;
+}

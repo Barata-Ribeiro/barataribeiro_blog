@@ -22,6 +22,7 @@ import authRoutes from "./api/v1/routes/AuthRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
 import endpointUsers from "./endpoints/dashboard"
+import endpointPosts from "./endpoints/posts"
 
 // Custom Middleware
 import SetCurrentYear from "./middlewares/CurrentYear"
@@ -63,7 +64,7 @@ const startServer = async () => {
                     maxAge: 1 * 24 * 60 * 60 * 1000
                 },
                 store: MongoStore.create({
-                    client: connection.getClient(),
+                    client: connection.getClient() as any,
                     dbName: process.env.MONGODB_DBNAME || "test",
                     collectionName: "sessions",
                     stringify: false,
@@ -116,6 +117,7 @@ const startServer = async () => {
         })
         app.use("/auth", endpointAuth)
         app.use("/dashboard", endpointUsers)
+        app.use("/posts", endpointPosts)
 
         // PAGE 404
         app.use((_req, res) =>

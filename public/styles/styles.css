@@ -7,6 +7,9 @@
 @import url(./layouts/footer.css);
 @import url(./layouts/form.css);
 
+/* Markdown */
+@import url(./markdown/post-markdown.css);
+
 /* Pages */
 @import url(./pages/404.css);
 @import url(./pages/error.css);

@@ -12,6 +12,12 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/styles/styles.min.css" />
+
+    <% if (typeof loadPrismJS !== 'undefined' && loadPrismJS) { %>
+    <script nonce="<%= nonce %>" src="https://cdn.jsdelivr.net/npm/prismjs@1.29/prism.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29/themes/prism.min.css"
+        integrity="sha256-ko4j5rn874LF8dHwW29/xabhh8YBleWfvxb8nQce4Fc=" crossorigin="anonymous" />
+    <% } %>
 </head>
 
 <body>
