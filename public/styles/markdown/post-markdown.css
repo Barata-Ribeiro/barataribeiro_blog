@@ -116,6 +116,11 @@ ol {
     margin-left: 1.5rem;
 }
 
+#post-content li,
+#post-preview li {
+    display: list-item;
+}
+
 #post-content blockquote,
 #post-preview blockquote {
     border-left: 0.4rem solid var(--color-11);
