@@ -1,73 +1,125 @@
 #post-content h1,
+#post-preview h1,
 #post-content h2,
+#post-preview h2,
 #post-content h3,
+#post-preview h3,
 #post-content h4,
+#post-preview h4,
 #post-content h5,
-#post-content h6 {
-    color: #333;
-    font-family: "Helvetica", sans-serif;
-    margin-top: 20px;
-    margin-bottom: 10px;
+#post-preview h5,
+#post-content h6,
+#post-preview h6 {
+    color: var(--color-2);
+    font-family: "JetBrains Mono", monospace;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-#post-content h1 {
-    font-size: 2.5em; /* Adjust the font size for h1 */
+#post-content h1,
+#post-preview h1 {
+    font-size: 2.5em;
 }
 
-#post-content h2 {
-    font-size: 2em; /* Adjust the font size for h2 */
+#post-content h2,
+#post-preview h2 {
+    font-size: 2em;
 }
 
-#post-content h3 {
-    font-size: 1.75em; /* Adjust the font size for h3 */
+#post-content h3,
+#post-preview h3 {
+    font-size: 1.75em;
 }
 
-#post-content h4 {
-    font-size: 1.5em; /* Adjust the font size for h4 */
+#post-content h4,
+#post-preview h4 {
+    font-size: 1.5em;
 }
 
-#post-content h5 {
-    font-size: 1.25em; /* Adjust the font size for h5 */
+#post-content h5,
+#post-preview h5 {
+    font-size: 1.25em;
 }
 
-#post-content h6 {
-    font-size: 1em; /* Adjust the font size for h6 */
+#post-content h6,
+#post-preview h6 {
+    font-size: 1em;
 }
 
-#post-content p {
-    color: #666;
-    font-family: "Arial", sans-serif;
+#post-content p,
+#post-preview p {
+    color: var(--color-1);
+    font-family: "JetBrains Mono", monospace;
     line-height: 1.6;
 }
 
-#post-content a {
-    color: #007bff;
+#post-content a,
+#post-preview a {
+    color: var(--color-4);
     text-decoration: underline;
 }
 
-#post-content pre {
-    background-color: #f7f7f7;
-    border: 1px solid #e1e1e8;
-    padding: 10px;
+#post-content a:hover,
+#post-preview a:hover {
+    color: var(--color-5);
+    background-color: var(--color-1);
+}
+
+#post-content pre,
+#post-preview pre {
+    background-color: var(--color-9);
+    border: 0.125rem solid var(--color-10);
+    padding: 1rem;
     overflow: auto;
     line-height: 1.4;
-    font-family: "Courier New", monospace;
+    font-family: "IBM Plex Mono", monospace;
     font-size: 0.9em;
 }
 
-#post-content img {
+#post-content img,
+#post-preview img {
     max-width: 100%;
     height: auto;
 }
 
 #post-content ul,
-#post-content ol {
-    padding-left: 20px;
+#post-preview ul,
+#post-content ol,
+#post-preview ol {
+    padding-left: 2rem;
 }
 
-#post-content blockquote {
-    border-left: 4px solid #ccc;
-    padding: 0 15px;
-    color: #777;
+#post-content ul ul,
+#post-preview ol ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 1.5rem;
+}
+
+#post-content ul,
+#post-preview ul {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+#post-content ol,
+#post-preview ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+
+#post-content ol ol,
+#post-preview ul,
+ol {
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin-left: 1.5rem;
+}
+
+#post-content blockquote,
+#post-preview blockquote {
+    border-left: 0.4rem solid var(--color-11);
+    padding: 0 1.5rem;
+    color: var(--color-12);
     font-style: italic;
 }

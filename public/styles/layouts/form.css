@@ -63,7 +63,8 @@
 }
 
 .form__textarea {
-    resize: none;
+    resize: vertical;
+    min-height: 25dvw;
 }
 
 .form__textarea::placeholder,

@@ -9,6 +9,11 @@
 
     --color-7: #dc2626;
     --color-8: #fca5a5;
+
+    --color-9: #f7f7f7;
+    --color-10: #e1e1e8;
+    --color-11: #ccc;
+    --color-12: #777;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +28,11 @@
 
         --color-7: #b22222;
         --color-8: #e57373;
+
+        --color-9: #777;
+        --color-10: #ccc;
+        --color-11: #e1e1e8;
+        --color-12: #f7f7f7;
     }
 }
 
@@ -34,7 +44,7 @@ html {
 body {
     font-size: 1.6rem;
     line-height: 1.5;
-
+    background-color: var(--color-6);
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
