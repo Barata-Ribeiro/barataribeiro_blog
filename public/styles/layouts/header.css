@@ -20,6 +20,29 @@
     text-rendering: optimizeLegibility;
     line-height: 1;
     text-transform: uppercase;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__sub::before,
+.header__sub::after {
+    content: "\2014";
+    font-size: 2.4rem;
+    color: var(--color-4);
+}
+
+.header__sub {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+}
+
+#button-dashboardSmall {
+    display: none;
 }
 
 .header__button {
@@ -85,4 +108,16 @@
 
 .header__button:not(:disabled):active {
     transform: translateY(0.125rem);
+}
+
+@media screen and (max-width: 480px) {
+    #button-dashboardBig {
+        display: none;
+    }
+    #button-dashboardSmall {
+        display: block;
+    }
+    .header__button {
+        padding-inline: 2rem;
+    }
 }

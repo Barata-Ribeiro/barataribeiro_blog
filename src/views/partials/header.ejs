@@ -1,13 +1,22 @@
 <header class="header">
     <nav class="header__nav" role="navigation" aria-label="Main Navigation">
-        <a href="/" class="header__logo" aria-label="Site logo">&#60;&#47;&#62;</a>
+        <a href="/" class="header__logo" aria-label="Site logo" role="link">
+            <span class="header__sub">
+                <span>Book</span>
+                <span>of</span>
+            </span>
+            <span>Shadows</span>
+        </a>
 
         <%- include('./search.ejs') %>
 
         <% if (locals.user) { %>
-        <a href="/dashboard/<%= locals.user.username %>" class="header__button" aria-label="Dashboard">Dashboard</a>
+        <a id="button-dashboardBig" href="/dashboard/<%= locals.user.username %>" class="header__button"
+            aria-label="Dashboard" role="button">Dashboard</a>
+        <a id="button-dashboardSmall" href="/dashboard/<%= locals.user.username %>" class="header__button"
+            aria-label="Dashboard" role="button">DSH</a>
         <% } else { %>
-        <a href="/auth/login" class="header__button" aria-label="Login">Login</a>
+        <a id="button-login" href="/auth/login" class="header__button" aria-label="Login" role="button">Login</a>
         <% } %>
     </nav>
 </header>
