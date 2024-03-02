@@ -25,20 +25,78 @@
             </fieldset>
 
             <div class="form__group">
-                <button id="createPostButton" name="createPostButton" type="submit" class="form__submit">Publish
-                    Post</button>
-                <% if (error) { %>
-                <span id="error-message" role="alert" aria-label="<%= error %>"
+                <div class="form__subgroup">
+                    <button id="createPostButton" name="createPostButton" type="submit" class="form__submit">Publish
+                        Post</button>
+
+                    <div class="form__subgroup-wrapper">
+                        <button id="saveDraftButton" name="saveDraftButton" class="form__regular-button" type="button">
+                            Draft</button>
+                        <button id="deleteDraftButton" name="deleteDraftButton" class="form__regular-button"
+                            type="button">&#10005</button>
+                    </div>
+                </div <% if (error) { %> <span id="error-message" role="alert" aria-label="<%= error %>"
                     class="form__error-message"><%= error %></span>
                 <% } %>
             </div>
         </form>
+
+        <article class="post__preview__article" id="post-preview">
+
+        </article>
     </div>
 </section>
-<script nonce="<%= nonce %>">
+<script type="module" nonce="<%= nonce %>">
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+    import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.9/+esm';
+
     document.addEventListener('DOMContentLoaded', () => {
-        const formEl = document.getElementById("newPostForm");
+        const contentEl = document.getElementById("content");
+        const postPreview = document.getElementById("post-preview");
         const buttonEl = document.getElementById("createPostButton");
+
+        const saveDraftButton = document.getElementById("saveDraftButton");
+        const deleteDraftButton = document.getElementById("deleteDraftButton");
+
+        const draft = localStorage.getItem('draft');
+        if (draft) {
+            const { title, content, tags } = JSON.parse(draft);
+            document.getElementById("title").value = title;
+            document.getElementById("content").value = content;
+            document.getElementById("tags").value = tags;
+        }
+
+        const updatePreview = async () => {
+            const parsedContent = await marked.parse(contentEl.value, {
+                async: true,
+                gfm: true,
+                breaks: true
+            });
+            const sanitizedContent = await DOMPurify.sanitize(parsedContent);
+
+            postPreview.innerHTML = sanitizedContent;
+        };
+
+        contentEl.addEventListener('input', updatePreview);
+        updatePreview();
+
+        const formEl = document.getElementById("newPostForm");
+        saveDraftButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const draft = JSON.stringify({
+                title: formEl.title.value,
+                content: formEl.content.value,
+                tags: formEl.tags.value
+            });
+            alert('Draft saved');
+            localStorage.setItem('draft', draft);
+        })
+
+        deleteDraftButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            alert('Draft deleted');
+            localStorage.removeItem('draft');
+        })
 
         formEl.addEventListener('submit', function() {
             buttonEl.disabled = true;
