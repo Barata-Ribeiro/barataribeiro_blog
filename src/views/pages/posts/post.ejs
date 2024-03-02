@@ -1,11 +1,29 @@
-<section>
-    <h1><%= post.title %></h1>
-    <article id="post-content">
+<section id="individual-post" role="article" aria-labelledby="post-title">
+    <header class="post__header">
+        <h1 id="post-title" class="post__info-title"><%= post.title %></h1>
+        <span class="post__info-author">Post by:
+            <%= post.author.displayName ? post.author.displayName : post.author.username %>
+        </span>
+
+        <span class="post__info-createdAt"><%= post.createdAt %></span>
+    </header>
+
+    <article id="post-content" class="post__content" role="region" aria-label="Post Content">
         <%- post.content %>
+
+        <div class="post__tags">
+            <span class="post__tags_span">Tags: </span>
+            <% post.tags.forEach(function(tag) { %>
+            <a href="/posts?tags=<%= tag.name %>" class="post__tag">#<%= tag.name %></a>
+            <% }); %>
+        </div>
     </article>
-    <p><%= post.created_at %></p>
-    <p><%= post.updated_at %></p>
-    <a href="/posts/<%= post.id %>/edit">Edit</a>
-    <a href="/posts/<%= post.id %>/delete">Delete</a>
-    <a href="/posts">Back</a>
+
+    <footer class="post__footer">
+        <% if (isUserLoggedIn && user.username === post.author.username) { %>
+        <a href="/posts/<%= post.id %>/edit">Edit</a>
+        <a href="/posts/<%= post.id %>/delete">Delete</a>
+        <% } %>
+        <a href="/posts">Back</a>
+    </footer>
 </section>
