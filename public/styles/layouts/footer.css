@@ -6,7 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 960px;
+    max-width: 96rem;
     padding: 4rem 2rem;
     margin: 0 auto;
 }

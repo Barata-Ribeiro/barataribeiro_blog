@@ -1,13 +1,13 @@
 <header class="header">
-    <nav class="header__nav">
-        <a href="/">
-            <h1 class="header__logo">Barata-Ribeiro</h1>
-        </a>
+    <nav class="header__nav" role="navigation" aria-label="Main Navigation">
+        <a href="/" class="header__logo" aria-label="Site logo">&#60;&#47;&#62;</a>
+
         <%- include('./search.ejs') %>
+
         <% if (locals.user) { %>
-            <a href="/dashboard/<%= locals.user.username %>" class="header__button">Dashboard</a>
+        <a href="/dashboard/<%= locals.user.username %>" class="header__button" aria-label="Dashboard">Dashboard</a>
         <% } else { %>
-            <a href="/auth/login" class="header__button">Login</a>
+        <a href="/auth/login" class="header__button" aria-label="Login">Login</a>
         <% } %>
     </nav>
 </header>

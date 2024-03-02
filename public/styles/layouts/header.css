@@ -6,16 +6,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 960px;
+    max-width: 96rem;
     margin: 0 auto;
-    padding-inline: 2rem;
+    padding: 2.4rem 2rem;
 }
 
 .header__logo {
-    font-size: 2.4rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 2.8rem;
     font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1;
     text-transform: uppercase;
-    padding: 2.4rem 0;
 }
 
 .header__button {
