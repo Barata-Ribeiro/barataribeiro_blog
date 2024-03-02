@@ -1,11 +1,22 @@
-<section id="individual-post" role="article" aria-labelledby="post-title">
+<section id="individual-post" role="article" aria-labelledby="post-title" class="post__individual-post">
     <header class="post__header">
-        <h1 id="post-title" class="post__info-title"><%= post.title %></h1>
-        <span class="post__info-author">Post by:
-            <%= post.author.displayName ? post.author.displayName : post.author.username %>
-        </span>
+        <div class="post__header__title">
+            <h1 id="post-title" class="post__info-title"><%= post.title %></h1>
+            <span class="post__info-author">Post by:
+                <%= post.author.displayName ? post.author.displayName : post.author.username %>
+            </span>
+        </div>
 
-        <span class="post__info-createdAt"><%= post.createdAt %></span>
+        <div class="post__header__controls">
+            <% if (isUserLoggedIn && user.username === post.author.username) { %>
+            <a class="post__info-link" href="/dashboard/<%= user.username %>/posts/<%= post._id %>/edit-post">Edit</a>
+            <a class="post__info-link"
+                href="/dashboard/<%= user.username %>/posts/<%= post._id %>/delete-post">Delete</a>
+            <% } %>
+            <a class="post__info-link" href="/posts">Back &#187;</a>
+
+            <span class="post__info-createdAt"><%= post.createdAt %></span>
+        </div>
     </header>
 
     <article id="post-content" class="post__content" role="region" aria-label="Post Content">
@@ -18,12 +29,4 @@
             <% }); %>
         </div>
     </article>
-
-    <footer class="post__footer">
-        <% if (isUserLoggedIn && user.username === post.author.username) { %>
-        <a href="/posts/<%= post.id %>/edit">Edit</a>
-        <a href="/posts/<%= post.id %>/delete">Delete</a>
-        <% } %>
-        <a href="/posts">Back</a>
-    </footer>
 </section>
