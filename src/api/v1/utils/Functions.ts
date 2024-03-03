@@ -7,3 +7,7 @@ export function parseDate(date: NativeDate | Date): string {
         minute: "2-digit"
     })
 }
+
+export function summarizeText(text: string, length: number): string {
+    return text.length > length ? text.slice(0, length) + "..." : text
+}

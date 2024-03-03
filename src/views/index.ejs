@@ -1,2 +1,28 @@
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
+<div class="main__column">
+    <% featuredPosts.slice(0, 1).forEach(post => { %>
+    <article class="post post--featured">
+        <h2 class="post__title"><%= post.title %></h2>
+        <!-- other post details -->
+    </article>
+    <% }); %>
+    <% nextSixPosts.slice(0, 3).forEach(post => { %>
+    <article class="post">
+        <h2 class="post__title"><%= post.title %></h2>
+        <!-- other post details -->
+    </article>
+    <% }); %>
+</div>
+<div class="main__column">
+    <% featuredPosts.slice(1, 2).forEach(post => { %>
+    <article class="post post--featured">
+        <h2 class="post__title"><%= post.title %></h2>
+        <!-- other post details -->
+    </article>
+    <% }); %>
+    <% nextSixPosts.slice(3, 6).forEach(post => { %>
+    <article class="post">
+        <h2 class="post__title"><%= post.title %></h2>
+        <!-- other post details -->
+    </article>
+    <% }); %>
+</div>

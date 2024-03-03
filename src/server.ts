@@ -22,6 +22,7 @@ import authRoutes from "./api/v1/routes/AuthRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
 import endpointUsers from "./endpoints/dashboard"
+import endpointHome from "./endpoints/home"
 import endpointPosts from "./endpoints/posts"
 
 // Custom Middleware
@@ -112,9 +113,7 @@ const startServer = async () => {
         app.use("/dashboard", usersRoutes)
 
         // VIEW ENDPOINTS
-        app.get("/", function (_req, res) {
-            res.render("index", { title: "Express", description: "Welcome to Express" })
-        })
+        app.use("/", endpointHome)
         app.use("/auth", endpointAuth)
         app.use("/dashboard", endpointUsers)
         app.use("/posts", endpointPosts)
