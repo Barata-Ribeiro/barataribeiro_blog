@@ -8,6 +8,7 @@
 @import url(./layouts/form.css);
 
 /* Pages */
+@import url(./pages/index.css);
 @import url(./pages/404.css);
 @import url(./pages/error.css);
 @import url(./pages/dashboard.css);
