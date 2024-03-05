@@ -27,6 +27,7 @@ routes.get("/", async (req: Request, res: Response) => {
 
     const [posts, total] = await Promise.all([
         Post.find(query)
+            .select("-content -totalViews")
             .sort({ createdAt: -1 })
             .populate({ path: "author", select: "username displayName -_id" })
             .populate({ path: "tags", select: "name -_id" })

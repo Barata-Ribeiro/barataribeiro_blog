@@ -1,0 +1,28 @@
+<section class="posts" aria-labelledby="postsHeading">
+    <% if (typeof data !== 'undefined' && data) { %>
+    <h2 id="postsHeading" class="screenreader">Posts</h2>
+    <ul class="posts__list">
+        <% data.posts.forEach((post) => { %>
+        <li id="<%= post._id %>" class="posts__item">
+            <div class="posts__header">
+                <h3 class="posts__title"><%= post.title %></h3>
+                <span class="posts__date"><%= post.createdAt %></span>
+            </div>
+            <p class="posts__summary"><%= post.summary %></p>
+            <a href="/posts/<%= post._id %>/<%= post.slug %>" class="posts__link">Read more »</a>
+        </li>
+        <% }) %>
+    </ul>
+
+    <nav class="pagination" aria-label="Pagination">
+        <% if (data.prevPage) { %>
+        <a href="<%= data.prevPage %>" class="pagination__prev" aria-label="Go to Previous Page">Previous Page</a>
+        <% } %>
+        <% if (data.nextPage) { %>
+        <a href="<%= data.nextPage %>" class="pagination__next" aria-label="Go to Next Page">Next Page</a>
+        <% } %>
+    </nav>
+    <% } else { %>
+    <p class="posts__empty">No posts found.</p>
+    <% } %>
+</section>

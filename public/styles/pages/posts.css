@@ -1,0 +1,136 @@
+.posts {
+    flex: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.posts__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.posts__item {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 0.125rem solid var(--color-4);
+    border-radius: 0.3rem;
+    line-height: 1;
+}
+
+.posts__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    border-bottom: 0.125rem solid var(--color-4);
+    padding-bottom: 0.5rem;
+}
+
+.posts__title::before {
+    content: "■ ";
+}
+
+.posts__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-3);
+}
+
+.posts__date {
+    font-size: 1.2rem;
+    color: var(--color-4);
+}
+
+.posts__summary {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    text-wrap: balance;
+    color: var(--color-1);
+}
+
+.posts__link:hover {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    background-color: var(--color-1);
+    color: var(--color-5);
+}
+
+.pagination {
+    place-self: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.pagination__prev,
+.pagination__next {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    position: relative;
+    background: var(--color-6);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 0.125rem solid var(--color-1);
+    border-radius: 0.3rem;
+    color: var(--color-1);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 1rem 4rem;
+    text-align: center;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    transition: transform 0.2s;
+}
+
+.pagination__prev:hover:not(:disabled):hover,
+.pagination__next:hover:not(:disabled):hover {
+    background-color: var(--color-1);
+    color: var(--color-5);
+    transform: scale(1.05);
+}
+
+.pagination__prev:active:not(:disabled):hover:active,
+.pagination__next:active:not(:disabled):hover:active {
+    transform: scale(1.05) translateY(0.125rem);
+}
+
+.pagination__prev:focus,
+.pagination__next:focus {
+    outline: 0 solid transparent;
+}
+
+.pagination__prev:disabled,
+.pagination__next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.posts__empty {
+    margin-block: auto;
+    place-self: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 2rem;
+    border: 0.125rem solid var(--color-4);
+    border-radius: 0.3rem;
+    line-height: 1;
+}
