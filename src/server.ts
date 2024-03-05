@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid"
 // Custom Imports
 import { connectToDatabase, connection } from "./api/v1/config/database"
 import authRoutes from "./api/v1/routes/AuthRoutes"
+import postsRoutes from "./api/v1/routes/PostsRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
 import endpointAuth from "./endpoints/auth"
 import endpointUsers from "./endpoints/dashboard"
@@ -111,6 +112,7 @@ const startServer = async () => {
         // API ENDPOINTS
         app.use("/auth", authRoutes)
         app.use("/dashboard", usersRoutes)
+        app.use("/posts", postsRoutes)
 
         // VIEW ENDPOINTS
         app.use("/", endpointHome)
