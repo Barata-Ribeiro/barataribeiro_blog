@@ -102,7 +102,8 @@ routes.get("/:postId/:postSlug", async (req: Request, res: Response, next: NextF
 
     const data = {
         title: post.title,
-        description: post.content.substring(0, 100) + (post.content.length > 100 ? "..." : ""),
+        description: post.summary + "...",
+        keywords: post.tags.length > 0 ? post.tags.map((tag: any) => tag.name).join(", ") : "",
         loadPrismJS: true,
         post: {
             ...post.toObject(),
