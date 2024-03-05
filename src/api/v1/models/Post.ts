@@ -5,12 +5,23 @@ const PostSchema = new Schema(
     {
         title: {
             type: String,
-            required: [true, "Title is required"],
+            required: [true, "is required"],
             index: true
+        },
+        summary: {
+            type: String,
+            required: [true, "is required"],
+            maxlength: [150, "cannot be longer than 150 characters"]
         },
         content: {
             type: String,
-            required: [true, "Content is required"]
+            required: [true, "is required"]
+        },
+        slug: {
+            type: String,
+            lowercase: true,
+            required: true,
+            unique: true
         },
         author: { type: Schema.Types.ObjectId, ref: "User" },
         tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],

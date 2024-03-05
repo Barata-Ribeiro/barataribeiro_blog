@@ -19,9 +19,9 @@
                 <% latestPosts.forEach(post => { %>
                 <li class="dashboard__content__posts__list-item" role="listitem">
                     <a class="dashboard__content__posts__list-item__link"
-                        href="/posts/<%= post._id %>/<%= post.title %>"
+                        href="/posts/<%= post._id %>/<%= post.slug %>"
                         aria-label="View Post: <%= post.title %>"><%= post.title %></a>
-                    <p class="dashboard__content__posts__list-item__description"><%= post.content %></p>
+                    <p class="dashboard__content__posts__list-item__description"><%= post.summary %></p>
                     <span class="dashboard__content__posts__list-item__views">Views: <%= post.totalViews %></span>
                 </li>
                 <% }) %>

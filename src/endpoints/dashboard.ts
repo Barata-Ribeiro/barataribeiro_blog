@@ -17,20 +17,13 @@ routes.get("/:username", authMiddleware, async (req: Request, res: Response, nex
         const user = await User.findOne({ username }).select("-posts")
         if (!user) return next(new NotFoundError("User not found. Try to log into your account again."))
 
-        const latestPosts = await Post.find({ author: user._id }).sort({ createdAt: -1 }).limit(2)
-
-        const postsSummarized = latestPosts.map((post) => {
-            return {
-                ...post.toObject(),
-                content: post.content.substring(0, 100) + (post.content.length > 100 ? "..." : "")
-            }
-        })
+        const latestPosts = await Post.find({ author: user._id }).select("-content -tags").sort({ createdAt: -1 }).limit(2)
 
         const data = {
             title: `Dashboard - ${user.username}`,
             description: `Welcome back, ${user.username}!`,
             user,
-            latestPosts: postsSummarized
+            latestPosts
         }
 
         return res.render("pages/users/dashboard", data)

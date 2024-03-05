@@ -62,8 +62,8 @@ export class UserController {
         if (!req.session.user) return res.redirect("/auth/logout")
 
         const data = {
-            title: `Edit Account - ${sessionUser.username}`,
-            description: `Edit your account, ${sessionUser.username}!`,
+            title: `Create a new post - ${sessionUser.username}`,
+            description: `Time to post something, ${sessionUser.username}!`,
             user: sessionUser,
             error: null
         }
@@ -82,7 +82,7 @@ export class UserController {
         const response = await this.userService.createPost(username, requestingBody)
         if (response.error) return res.render("pages/users/new-post", { ...data, error: response.error })
 
-        if (response.post) return res.redirect(`/posts/${response.post.id}/${response.post.title}`)
+        if (response.post) return res.redirect(`/posts/${response.post.id}/${response.post.slug}`)
 
         return res.render("pages/users/new-post", {
             ...data,

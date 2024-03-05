@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { UserCreatePostRequestBody, UserEditRequestBody } from "../../../interfaces/UserInterfaces"
 import Post from "../models/Post"
 import Tag from "../models/Tag"
@@ -61,7 +62,7 @@ export class UserService {
     }
 
     async createPost(username: string, requestingBody: UserCreatePostRequestBody) {
-        const { title, content, tags } = requestingBody
+        const { title, content, summary, tags } = requestingBody
         if (!title || !content || !tags) return { error: "You must provide a title, content, and tags." }
 
         try {
@@ -80,7 +81,9 @@ export class UserService {
                 })
             )
 
-            const post = await Post.create({ title, content, author: user._id, tags: tagsIds })
+            const slug = this.titleToSlug(title)
+
+            const post = await Post.create({ title, summary, content, slug, author: user._id, tags: tagsIds })
             if (!post) return { error: "Failed to create the post." }
 
             const associateTagsToPost = await Promise.all(
@@ -100,7 +103,22 @@ export class UserService {
             return { post, error: null }
         } catch (error) {
             console.error(error)
-            return { error: "An error occurred while updating the account." }
+            if (error instanceof mongoose.Error.ValidationError) {
+                const messages = Object.values(error.errors).map(
+                    (err) => `${err.name}: ${err.path.charAt(0).toUpperCase() + err.path.slice(1)} - ${err.message}.`
+                )
+                return { error: messages.join(" ") }
+            }
+            return { error: "An error occurred while creating your post." }
         }
+    }
+
+    private titleToSlug = (title: string): string => {
+        return title
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9 -]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-")
     }
 }

@@ -82,16 +82,16 @@ routes.get("/", async (req: Request, res: Response) => {
     res.status(200).render("pages/posts/posts", data)
 })
 
-routes.get("/:postId/:postTitle", async (req: Request, res: Response, next: NextFunction) => {
-    const { postId, postTitle } = req.params
-    if (!postId || !postTitle) return next(new NotFoundError("Post not found."))
+routes.get("/:postId/:postSlug", async (req: Request, res: Response, next: NextFunction) => {
+    const { postId, postSlug } = req.params
+    if (!postId || !postSlug) return next(new NotFoundError("Post not found."))
 
     const post = await Post.findById({ _id: postId })
         .populate({ path: "author", select: "username displayName -_id" })
         .populate({ path: "tags", select: "name -_id" })
         .exec()
     if (!post) return next(new NotFoundError("Post not found."))
-    if (post.title !== postTitle) return next(new NotFoundError("Post not found."))
+    if (post.slug !== postSlug) return next(new NotFoundError("Post not found."))
 
     post.content = await marked.parse(post.content, {
         gfm: true,

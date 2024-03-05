@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
 }
 
 .form__title::before {
@@ -12,6 +14,11 @@
     font-size: 3.6rem;
     color: var(--color-1);
     margin-bottom: 2rem;
+}
+
+.form__instructions {
+    font-size: 1.6rem;
+    color: var(--color-4);
 }
 
 .form__fieldset-wrapper {
@@ -43,13 +50,13 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 100%;
 }
 
 .form__subgroup {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     flex-wrap: wrap;
 }
 
@@ -89,43 +96,29 @@
     min-height: 25dvw;
 }
 
-.form__textarea::-webkit-input-placeholder,
-.form__input::-webkit-input-placeholder {
+.form__textarea__summary {
+    resize: none;
+    min-height: 5dvw;
+}
+
+.form__help {
+    font-size: 1.2rem;
+    color: var(--color-4);
+}
+
+.form__textarea::-webkit-input-placeholder, .form__input::-webkit-input-placeholder {
     color: var(--color-3);
 }
 
-.form__textarea::-moz-placeholder,
-.form__input::-moz-placeholder {
+.form__textarea::-moz-placeholder, .form__input::-moz-placeholder {
     color: var(--color-3);
 }
 
-.form__textarea:-ms-input-placeholder,
-.form__input:-ms-input-placeholder {
+.form__textarea:-ms-input-placeholder, .form__input:-ms-input-placeholder {
     color: var(--color-3);
 }
 
-.form__textarea::-ms-input-placeholder,
-.form__input::-ms-input-placeholder {
-    color: var(--color-3);
-}
-
-.form__textarea::-webkit-input-placeholder,
-.form__input::-webkit-input-placeholder {
-    color: var(--color-3);
-}
-
-.form__textarea::-moz-placeholder,
-.form__input::-moz-placeholder {
-    color: var(--color-3);
-}
-
-.form__textarea:-ms-input-placeholder,
-.form__input:-ms-input-placeholder {
-    color: var(--color-3);
-}
-
-.form__textarea::-ms-input-placeholder,
-.form__input::-ms-input-placeholder {
+.form__textarea::-ms-input-placeholder, .form__input::-ms-input-placeholder {
     color: var(--color-3);
 }
 
@@ -142,6 +135,9 @@
 
 .form__submit,
 .form__regular-button {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
     position: relative;
     background: var(--color-6);
     -webkit-backface-visibility: hidden;
@@ -153,17 +149,13 @@
     display: inline-block;
     font-size: 2.4rem;
     font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 0;
-    padding: 2rem 4rem;
-    text-align: left;
-    text-decoration: none;
+    line-height: 1;
+    padding: 1rem 4rem;
+    text-align: center;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -webkit-user-select: none;
     touch-action: manipulation;
-    transform: translateZ(0) scale(1);
     transition: transform 0.2s;
 }
 

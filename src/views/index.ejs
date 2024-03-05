@@ -4,14 +4,14 @@
             <% featuredPosts.slice(0, 1).forEach(post => { %>
             <article class="latest__articles__featured">
                 <h2 class="featured__title"><%= post.title %></h2>
-                <p class="featured__summary"><%= post.content %></p>
-                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.title %>">Read More</a>
+                <p class="featured__summary"><%= post.summary %></p>
+                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.slug %>">Read More</a>
             </article>
             <% }); %>
             <% nextSixPosts.slice(0, 3).forEach(post => { %>
             <article class="latest__articles__regular-post">
                 <h2 class="regular-post__title"><%= post.title %></h2>
-                <p class="regular-post__summary"><%= post.content %></p>
+                <p class="regular-post__summary"><%= post.summary %></p>
             </article>
             <% }); %>
         </div>
@@ -20,14 +20,14 @@
             <% featuredPosts.slice(1, 2).forEach(post => { %>
             <article class="latest__articles__featured">
                 <h2 class="featured__title"><%= post.title %></h2>
-                <p class="featured__summary"><%= post.content %></p>
-                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.title %>">Read More</a>
+                <p class="featured__summary"><%= post.summary %></p>
+                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.slug %>">Read More</a>
             </article>
             <% }); %>
             <% nextSixPosts.slice(3, 6).forEach(post => { %>
             <article class="latest__articles__regular-post">
                 <h2 class="regular-post__title"><%= post.title %></h2>
-                <p class="regular-post__summary"><%= post.content %></p>
+                <p class="regular-post__summary"><%= post.summary %></p>
             </article>
             <% }); %>
         </div>

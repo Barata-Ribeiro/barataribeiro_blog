@@ -11,5 +11,6 @@ export interface UserEditRequestBody {
 export interface UserCreatePostRequestBody {
     title: string
     content: string
+    summary: string
     tags: string
 }
