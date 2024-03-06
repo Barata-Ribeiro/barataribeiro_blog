@@ -4,7 +4,7 @@ import { JSDOM } from "jsdom"
 import { marked } from "marked"
 import Post from "../api/v1/models/Post"
 import Tag from "../api/v1/models/Tag"
-import { parseDate } from "../api/v1/utils/Functions"
+import { parseDate, parseDateToISO } from "../api/v1/utils/Functions"
 import { NotFoundError } from "../middlewares/helpers/ApiErrors"
 
 const routes = Router({ mergeParams: true })
@@ -19,7 +19,8 @@ routes.get("/", async (req: Request, res: Response) => {
 
     let tagIds = [] as any[]
     if (tags) {
-        const tagList = tags.split(",")
+        tags = decodeURIComponent(tags)
+        const tagList = tags.split(", ")
         const foundTags = await Tag.find({ name: { $in: tagList } }).exec()
         tagIds = foundTags.map((tag) => tag._id)
     }
@@ -69,6 +70,8 @@ routes.get("/", async (req: Request, res: Response) => {
         data: {
             posts: posts.map((post) => ({
                 ...post.toObject(),
+                createdAtISO: parseDateToISO(post.createdAt),
+                updatedAtISO: parseDateToISO(post.updatedAt),
                 createdAt: parseDate(post.createdAt),
                 updatedAt: parseDate(post.updatedAt)
             })),

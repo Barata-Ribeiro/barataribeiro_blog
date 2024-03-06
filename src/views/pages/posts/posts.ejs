@@ -1,12 +1,12 @@
 <section class="posts" aria-labelledby="postsHeading">
-    <% if (typeof data !== 'undefined' && data && data.length > 0) { %>
+    <% if (data && data.posts && data.posts.length > 0) { %>
     <h2 id="postsHeading" class="screenreader">Posts</h2>
     <ul class="posts__list">
         <% data.posts.forEach((post) => { %>
         <li id="<%= post._id %>" class="posts__item">
             <div class="posts__header">
                 <h3 class="posts__title"><%= post.title %></h3>
-                <span class="posts__date"><%= post.createdAt %></span>
+                <time class="posts__date" datetime="<%= post.createdAtISO %>"><%= post.createdAt %></time>
             </div>
             <p class="posts__summary"><%= post.summary %></p>
             <a href="/posts/<%= post._id %>/<%= post.slug %>" class="posts__link">Read more »</a>
