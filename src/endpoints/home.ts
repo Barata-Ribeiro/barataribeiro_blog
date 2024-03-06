@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express"
 import Post from "../api/v1/models/Post"
-import { summarizeText } from "../api/v1/utils/Functions"
 import { InternalServerError } from "../middlewares/helpers/ApiErrors"
 
 const routes = Router({ mergeParams: true })
@@ -8,7 +7,7 @@ const routes = Router({ mergeParams: true })
 routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const posts = await Post.find()
-            .select("-tags -totalViews")
+            .select("-content -tags -totalViews")
             .sort({ createdAt: -1 })
             .populate({ path: "author", select: "username displayName -_id" })
             .limit(8)
@@ -23,13 +22,8 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
             })
         }
 
-        const summarizedPosts = posts.map((post) => ({
-            ...post.toObject(),
-            content: summarizeText(post.content, 200)
-        }))
-
-        const featuredPosts = summarizedPosts.slice(0, 2)
-        const nextSixPosts = summarizedPosts.slice(2, 8)
+        const featuredPosts = posts.slice(0, 2)
+        const nextSixPosts = posts.slice(2, 8)
 
         const data = {
             title: "Home",
