@@ -1,8 +1,7 @@
-<div class="search">
-    <form action="/search" method="POST" class="search__form" role="search">
-        <label class="search__label">
-            <span class="screenreader">Search</span>
-            <input type="search" name="search" aria-label="Seach" class="search__input" placeholder="Search tags..." />
-        </label>
-    </form>
-</div>
+<form action="/posts" method="GET" class="search__form" role="search">
+    <label for="search-tags" class="search__label">Search</label>
+    <input type="search" id="search-tags" name="tags" aria-label="Search tags" class="form__input"
+        pattern="[A-Za-z,.-]+" placeholder="Ex: fun, linux, markdown" required aria-describedby="search-help" />
+    <span id="search-help" class="screenreader">Enter tags separated by commas, periods, or dashes</span>
+    <button type="submit" class="screenreader">Search</button>
+</form>

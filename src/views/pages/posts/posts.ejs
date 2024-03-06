@@ -1,5 +1,5 @@
 <section class="posts" aria-labelledby="postsHeading">
-    <% if (typeof data !== 'undefined' && data) { %>
+    <% if (typeof data !== 'undefined' && data && data.length > 0) { %>
     <h2 id="postsHeading" class="screenreader">Posts</h2>
     <ul class="posts__list">
         <% data.posts.forEach((post) => { %>
