@@ -3,6 +3,7 @@ import { UserCreatePostRequestBody, UserEditRequestBody } from "../../../interfa
 import Post from "../models/Post"
 import Tag from "../models/Tag"
 import User from "../models/User"
+import { generateSlug } from "../utils/Functions"
 
 export class UserService {
     async updateAccount(username: string, requestingBody: UserEditRequestBody) {
@@ -81,7 +82,7 @@ export class UserService {
                 })
             )
 
-            const slug = this.titleToSlug(title)
+            const slug = generateSlug(title)
 
             const post = await Post.create({ title, summary, content, slug, author: user._id, tags: tagsIds })
             if (!post) return { error: "Failed to create the post." }
@@ -111,14 +112,5 @@ export class UserService {
             }
             return { error: "An error occurred while creating your post." }
         }
-    }
-
-    private titleToSlug = (title: string): string => {
-        return title
-            .trim()
-            .toLowerCase()
-            .replace(/[^a-z0-9 -]/g, "")
-            .replace(/\s+/g, "-")
-            .replace(/-+/g, "-")
     }
 }
