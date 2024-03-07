@@ -1,5 +1,9 @@
 import mongoose from "mongoose"
-import { UserCreatePostRequestBody, UserEditRequestBody } from "../../../interfaces/UserInterfaces"
+import {
+    UserCreatePostRequestBody,
+    UserEditPostRequestBody,
+    UserEditRequestBody
+} from "../../../interfaces/UserInterfaces"
 import Post from "../models/Post"
 import Tag from "../models/Tag"
 import User from "../models/User"
@@ -102,6 +106,45 @@ export class UserService {
             await user.save()
 
             return { post, error: null }
+        } catch (error) {
+            console.error(error)
+            if (error instanceof mongoose.Error.ValidationError) {
+                const messages = Object.values(error.errors).map(
+                    (err) => `${err.name}: ${err.path.charAt(0).toUpperCase() + err.path.slice(1)} - ${err.message}.`
+                )
+                return { error: messages.join(" ") }
+            }
+            return { error: "An error occurred while creating your post." }
+        }
+    }
+
+    async editPost(username: string, postId: string, requestingBody: UserEditPostRequestBody) {
+        const { title, content, summary } = requestingBody
+        if (!title && !content && !summary)
+            return { error: "You must provide a title, content, or summary to edit your post." }
+
+        console.log("username", username)
+        console.log("Body: ", requestingBody)
+        try {
+            const user = await User.findOne({ username })
+            if (!user) return { error: "User not found." }
+
+            const postToEdit = await Post.findOne({ author: user._id, _id: postId })
+            if (!postToEdit) return { error: "Post not found." }
+
+            console.log("Post was found.")
+
+            if (title && title !== "") {
+                postToEdit.title = title
+                postToEdit.slug = generateSlug(title)
+            }
+            if (summary && summary !== "") postToEdit.summary = summary
+            if (content && content !== "") postToEdit.content = content
+
+            const savedPost = await postToEdit.save()
+            if (!savedPost) return { error: "Failed to save the post." }
+
+            return { post: savedPost, error: null }
         } catch (error) {
             console.error(error)
             if (error instanceof mongoose.Error.ValidationError) {
