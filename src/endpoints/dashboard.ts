@@ -41,8 +41,11 @@ routes.get("/:username/edit-account", authMiddleware, async (req: Request, res: 
     const { username } = req.params
     if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
 
-    if (username !== req.session.user?.data?.username)
-        return next(new ForbiddenError("You are not allowed to access this page."))
+    const sessionUser = req.session.user?.data
+
+    if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
+
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
 
     try {
         const user = await User.findOne({ username }).select("-posts")
@@ -66,8 +69,11 @@ routes.get("/:username/posts", authMiddleware, async (req: Request, res: Respons
     const { username } = req.params
     if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
 
-    if (username !== req.session.user?.data?.username)
-        return next(new ForbiddenError("You are not allowed to access this page."))
+    const sessionUser = req.session.user?.data
+
+    if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
+
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
 
     try {
         const posts = await Post.find()
@@ -82,7 +88,7 @@ routes.get("/:username/posts", authMiddleware, async (req: Request, res: Respons
         const data = {
             title: `Posts - ${username}`,
             description: `Your posts, ${username}. Here you'll see an extensive list of your posts. All of them.`,
-            user: req.session.user?.data,
+            user: sessionUser,
             posts: posts.map((post) => ({
                 ...post.toObject(),
                 createdAtISO: parseDateToISO(post.createdAt),
@@ -103,10 +109,13 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
     const { username } = req.params
     if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
 
-    if (username !== req.session.user?.data?.username)
-        return next(new ForbiddenError("You are not allowed to access this page."))
+    const sessionUser = req.session.user?.data
 
-    res.locals.user = req.session.user?.data
+    if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
+
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
+
+    res.locals.user = sessionUser
 
     const data = {
         title: `New Post - ${username}`,
@@ -127,17 +136,22 @@ routes.get(
         if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
         if (!postId) return next(new ForbiddenError("Post ID is missing. Try to log into your account again."))
 
-        if (username !== req.session.user?.data?.username)
+        const sessionUser = req.session.user?.data
+
+        if (username !== sessionUser?.username)
             return next(new ForbiddenError("You are not allowed to access this page."))
 
+        if (sessionUser?.role !== "admin")
+            return next(new ForbiddenError("You are not authorized to delete this post."))
+
         try {
-            const post = await Post.findOne({ _id: postId, author: req.session.user?.data._id })
+            const post = await Post.findOne({ _id: postId, author: sessionUser._id })
             if (!post) return next(new NotFoundError("Post not found. Try to log into your account again."))
 
             const data = {
                 title: `Edit Post - ${username}`,
                 description: `Edit your post, ${username}! Don't forget to read the rules before posting.`,
-                user: req.session.user?.data,
+                user: sessionUser,
                 post,
                 loadPrismJS: true,
                 error: null

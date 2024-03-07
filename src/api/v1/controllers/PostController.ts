@@ -13,6 +13,8 @@ export class PostController {
         const { postId } = req.params
         if (!postId) return next(new NotFoundError("Missing post ID."))
 
+        if (sessionUser.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
+
         const session = await mongoose.startSession()
         session.startTransaction()
 

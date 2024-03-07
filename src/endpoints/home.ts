@@ -26,8 +26,11 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
         const nextSixPosts = posts.slice(2, 8)
 
         const data = {
-            title: "Home",
-            description: "Welcome to the home page.",
+            title: "Book of Shadows - Home",
+            description:
+                "Welcome to my Book of Shadows. This blog was created to share my thoughts, ideas, and experiences with anything programming related. I hope you enjoy your stay here and find something that resonates with you.",
+            keywords:
+                "programming, web development, software development, software engineering, technology, coding, programming languages, software, development, software developer, software engineer, software development blog, programming blog, web development blog, technology blog, software engineering blog, coding blog, programming languages blog, software blog, development blog, software developer blog, software engineer blog",
             featuredPosts,
             nextSixPosts
         }
