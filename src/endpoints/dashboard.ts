@@ -120,7 +120,7 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
 })
 
 routes.get(
-    "/:username/posts/edit-post/:postId",
+    "/:username/posts/:postId/edit-post",
     authMiddleware,
     async (req: Request, res: Response, next: NextFunction) => {
         const { username, postId } = req.params

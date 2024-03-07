@@ -9,37 +9,25 @@
             <p id="formInstructions" class="form__instructions">Please fill out the fields you wish to edit.</p>
 
             <fieldset class="form__fieldset">
-                <label for="title" class="form__label">Title
-                    <span class="form__required">*</span>
-                </label>
+                <label for="title" class="form__label">Title </label>
                 <input type="text" id="title" name="title" placeholder="Post Title" aria-label="Title"
-                    value="<%= post.title %>" class="form__input" required>
+                    value="<%= post.title %>" class="form__input">
             </fieldset>
 
             <fieldset class="form__fieldset">
-                <label for="summary" class="form__label">Summary
-                    <span class="form__required">*</span>
-                </label>
+                <label for="summary" class="form__label">Summary</label>
                 <textarea id="summary" name="summary" aria-label="Summary"
                     class="form__textarea form__textarea__summary"
-                    placeholder="Write your post summary here... 150 characters max." maxlength="150"
-                    required><%= post.summary %></textarea>
+                    placeholder="Write your post summary here... 150 characters max."
+                    maxlength="150"><%= post.summary %></textarea>
                 <p id="summaryHelp" class="form__help">Remaining characters: <span id="summary-total-chars">150</span>
                 </p>
             </fieldset>
 
             <fieldset class="form__fieldset">
-                <label for="content" class="form__label">Content
-                    <span class="form__required">*</span>
-                </label>
+                <label for="content" class="form__label">Content</label>
                 <textarea id="content" name="content" aria-label="Content" class="form__textarea"
-                    placeholder="Write your post content here..." required><%= post.content %></textarea>
-            </fieldset>
-
-            <fieldset class="form__fieldset">
-                <label for="tags" class="form__label">Tags</label>
-                <input type="text" id="tags" name="tags" placeholder="Add tags separated by commas" aria-label="Tags"
-                    value="<%= post.tags %>" class="form__input">
+                    placeholder="Write your post content here..."><%= post.content %></textarea>
             </fieldset>
 
             <div class="form__group">
