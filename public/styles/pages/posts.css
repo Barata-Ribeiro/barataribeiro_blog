@@ -57,10 +57,14 @@
     color: var(--color-1);
 }
 
-.posts__link:hover {
+.posts__link {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
+    cursor: pointer;
+}
+
+.posts__link:hover {
     background-color: var(--color-1);
     color: var(--color-5);
 }
