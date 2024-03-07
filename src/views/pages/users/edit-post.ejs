@@ -1,0 +1,137 @@
+<section class="edit-post">
+    <%- include("../../partials/users/user-header.ejs") %>
+
+    <div>
+        <h1 id="newPostHeading" class="form__title">Editing Post</h1>
+
+        <form id="newPostForm" action="/dashboard/<%= user.username %>/posts/<%= post._id %>/edit-post" method="POST"
+            class="form" aria-describedby="formInstructions">
+            <p id="formInstructions" class="form__instructions">Please fill out the fields you wish to edit.</p>
+
+            <fieldset class="form__fieldset">
+                <label for="title" class="form__label">Title
+                    <span class="form__required">*</span>
+                </label>
+                <input type="text" id="title" name="title" placeholder="Post Title" aria-label="Title"
+                    value="<%= post.title %>" class="form__input" required>
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="summary" class="form__label">Summary
+                    <span class="form__required">*</span>
+                </label>
+                <textarea id="summary" name="summary" aria-label="Summary"
+                    class="form__textarea form__textarea__summary"
+                    placeholder="Write your post summary here... 150 characters max." maxlength="150"
+                    required><%= post.summary %></textarea>
+                <p id="summaryHelp" class="form__help">Remaining characters: <span id="summary-total-chars">150</span>
+                </p>
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="content" class="form__label">Content
+                    <span class="form__required">*</span>
+                </label>
+                <textarea id="content" name="content" aria-label="Content" class="form__textarea"
+                    placeholder="Write your post content here..." required><%= post.content %></textarea>
+            </fieldset>
+
+            <fieldset class="form__fieldset">
+                <label for="tags" class="form__label">Tags</label>
+                <input type="text" id="tags" name="tags" placeholder="Add tags separated by commas" aria-label="Tags"
+                    value="<%= post.tags %>" class="form__input">
+            </fieldset>
+
+            <div class="form__group">
+                <div class="form__subgroup">
+                    <button id="editPostButton" name="editPostButton" type="submit" class="form__submit">Republish
+                        Post</button>
+
+                    <div class="form__subgroup-wrapper" role="group" aria-label="Draft options">
+                        <button id="saveDraftButton" name="saveDraftButton" class="form__regular-button" type="button">
+                            Draft</button>
+                        <button id="deleteDraftButton" name="deleteDraftButton" class="form__regular-button"
+                            type="button">&#10005</button>
+                    </div>
+                </div>
+                <% if (error) { %>
+                <span id="error-message" role="alert" aria-live="assertive"
+                    class="form__error-message"><%= error %></span>
+                <% } %>
+            </div>
+        </form>
+
+        <article class="post__preview__article" id="post-preview" aria-live="polite">
+            <h2 class="screenreader">Post Preview</h2>
+
+        </article>
+    </div>
+</section>
+<script type="module" nonce="<%= nonce %>">
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+    import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.9/+esm';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const contentEl = document.getElementById("content");
+        const summaryEl = document.getElementById("summary");
+        const postPreview = document.getElementById("post-preview");
+        const buttonEl = document.getElementById("editPostButton");
+
+        const saveDraftButton = document.getElementById("saveDraftButton");
+        const deleteDraftButton = document.getElementById("deleteDraftButton");
+        const summaryTotalChars = document.getElementById("summary-total-chars");
+
+        const draft = localStorage.getItem('edit-draft');
+        if (draft) {
+            const { title, summary, content, tags } = JSON.parse(draft);
+            document.getElementById("title").value = title;
+            document.getElementById("summary").value = summary;
+            document.getElementById("content").value = content;
+            document.getElementById("tags").value = tags;
+        }
+
+        const updateSummaryChars = () =>
+            summaryTotalChars.textContent = 150 - summaryEl.value.length;
+
+
+        const updatePreview = async () => {
+            const parsedContent = await marked.parse(contentEl.value, {
+                async: true,
+                gfm: true,
+                breaks: true
+            });
+            const sanitizedContent = await DOMPurify.sanitize(parsedContent);
+
+            postPreview.innerHTML = sanitizedContent;
+        };
+
+        summaryEl.addEventListener('input', updateSummaryChars);
+        contentEl.addEventListener('input', updatePreview);
+        updateSummaryChars();
+        updatePreview();
+
+        const formEl = document.getElementById("newPostForm");
+        saveDraftButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const draft = JSON.stringify({
+                title: formEl.title.value,
+                summary: formEl.summary.value,
+                content: formEl.content.value,
+                tags: formEl.tags.value
+            });
+            alert('Draft saved');
+            localStorage.setItem('edit-draft', draft);
+        })
+
+        deleteDraftButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            alert('Draft deleted');
+            localStorage.removeItem('draft');
+        })
+
+        formEl.addEventListener('submit', function() {
+            buttonEl.disabled = true;
+            buttonEl.textContent = "Publishing...";
+        });
+    });
+</script>

@@ -119,4 +119,36 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
     return res.render("pages/users/new-post", data)
 })
 
+routes.get(
+    "/:username/posts/edit-post/:postId",
+    authMiddleware,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const { username, postId } = req.params
+        if (!username) return next(new ForbiddenError("Username is missing. Try to log into your account again."))
+        if (!postId) return next(new ForbiddenError("Post ID is missing. Try to log into your account again."))
+
+        if (username !== req.session.user?.data?.username)
+            return next(new ForbiddenError("You are not allowed to access this page."))
+
+        try {
+            const post = await Post.findOne({ _id: postId, author: req.session.user?.data._id })
+            if (!post) return next(new NotFoundError("Post not found. Try to log into your account again."))
+
+            const data = {
+                title: `Edit Post - ${username}`,
+                description: `Edit your post, ${username}! Don't forget to read the rules before posting.`,
+                user: req.session.user?.data,
+                post,
+                loadPrismJS: true,
+                error: null
+            }
+
+            return res.render("pages/users/edit-post", data)
+        } catch (error) {
+            console.error(error)
+            return next(new InternalServerError("An error occurred while trying to log into your account."))
+        }
+    }
+)
+
 export default routes

@@ -9,6 +9,7 @@
 
         <div class="post__header__controls">
             <% if (isUserLoggedIn && user.username === post.author.username) { %>
+            <a class="post__info-link" href="/dashboard/<%= user.username %>/posts/<%= post._id %>/edit-post">Edit</a>
             <form action="/posts/<%= post._id %>/delete" method="POST" style="display: inline;">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="post__info-link">Delete</button>
