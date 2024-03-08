@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express"
 import Post from "../api/v1/models/Post"
+import Tag from "../api/v1/models/Tag"
 import { InternalServerError } from "../middlewares/helpers/ApiErrors"
 
 const routes = Router({ mergeParams: true })
@@ -11,14 +12,16 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
             .sort({ createdAt: -1 })
             .populate({ path: "author", select: "username displayName -_id" })
             .limit(8)
-            .exec()
 
-        if (!posts) {
+        const tags = await Tag.find().select("name -_id")
+
+        if (!posts || posts.length === 0 || !tags) {
             return res.status(200).render("index", {
                 title: "Home",
                 description: "Welcome to the home page.",
                 featuredPosts: [],
-                nextSixPosts: []
+                nextSixPosts: [],
+                tags: []
             })
         }
 
@@ -32,7 +35,8 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
             keywords:
                 "programming, web development, software development, software engineering, technology, coding, programming languages, software, development, software developer, software engineer, software development blog, programming blog, web development blog, technology blog, software engineering blog, coding blog, programming languages blog, software blog, development blog, software developer blog, software engineer blog",
             featuredPosts,
-            nextSixPosts
+            nextSixPosts,
+            tags
         }
 
         return res.status(200).render("index", data)
