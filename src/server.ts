@@ -37,6 +37,9 @@ const startServer = async () => {
         const PORT = process.env.PORT || 3000
         let ENV = process.env.NODE_ENV || "development"
 
+        const DATA_REPO_ID = process.env.DATA_REPO_ID
+        const DATA_CATEGORY_ID = process.env.DATA_CATEGORY_ID
+
         await connectToDatabase()
 
         app.set("port", PORT)
@@ -76,13 +79,19 @@ const startServer = async () => {
             })
         )
         app.use((_req, res, next) => (res.locals.nonce = uuidv4()) && next())
+        app.use((_req, res, next) => {
+            res.locals.dataRepoId = DATA_REPO_ID
+            res.locals.dataCategoryId = DATA_CATEGORY_ID
+            next()
+        })
         app.use(
             helmet({
                 crossOriginResourcePolicy: false,
                 contentSecurityPolicy: {
                     directives: {
                         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-                        "script-src": ["'self'", (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`]
+                        "script-src": ["'self'", (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`],
+                        "frame-src": ["'self'", "https://giscus.app/"]
                     }
                 }
             })
