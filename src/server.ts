@@ -62,7 +62,6 @@ const startServer = async () => {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     sameSite: "strict",
-
                     maxAge: 1 * 24 * 60 * 60 * 1000
                 },
                 store: MongoStore.create({
@@ -71,7 +70,8 @@ const startServer = async () => {
                     collectionName: "sessions",
                     stringify: false,
                     autoRemove: "interval",
-                    autoRemoveInterval: 1
+                    autoRemoveInterval: 10,
+                    ttl: 1 * 24 * 60 * 60
                 })
             })
         )
