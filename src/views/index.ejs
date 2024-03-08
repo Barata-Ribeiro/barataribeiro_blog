@@ -1,35 +1,46 @@
 <section class="home__page">
-    <div class="home__latest__articles">
-        <div class="latest__articles__column">
-            <% featuredPosts.slice(0, 1).forEach(post => { %>
-            <article class="latest__articles__featured">
-                <h2 class="featured__title"><%= post.title %></h2>
-                <p class="featured__summary"><%= post.summary %></p>
-                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.slug %>">Read More</a>
-            </article>
-            <% }); %>
-            <% nextSixPosts.slice(0, 3).forEach(post => { %>
-            <article class="latest__articles__regular-post">
-                <h2 class="regular-post__title"><%= post.title %></h2>
-                <p class="regular-post__summary"><%= post.summary %></p>
-            </article>
-            <% }); %>
+    <aside class="home__aside">
+        <div class="aside__tag-wrapper">
+            <h2 class="aside__tag-title">Tag Cloud</h2>
+            <ul class="aside__tag-list">
+                <% tags.forEach(tag => { %>
+                <li class="aside__tag-name">
+                    <a class="aside__tag-link" href="/posts?tags=<%= tag.name %>"><%= tag.name %></a>
+                </li>
+                <% }); %>
+            </ul>
         </div>
 
-        <div class="latest__articles__column">
-            <% featuredPosts.slice(1, 2).forEach(post => { %>
-            <article class="latest__articles__featured">
-                <h2 class="featured__title"><%= post.title %></h2>
-                <p class="featured__summary"><%= post.summary %></p>
-                <a class="featured__link" href="/posts/<%= post._id %>/<%= post.slug %>">Read More</a>
-            </article>
-            <% }); %>
-            <% nextSixPosts.slice(3, 6).forEach(post => { %>
-            <article class="latest__articles__regular-post">
-                <h2 class="regular-post__title"><%= post.title %></h2>
-                <p class="regular-post__summary"><%= post.summary %></p>
-            </article>
-            <% }); %>
+        <div class="aside__portoflio-wrapper">
+            <h2 class="aside__portfolio-title">Portfolio</h2>
+            <a class="aside__portfolio__link" href="https://barataribeiro.com" target="_blank"
+                rel="noopener noreferrer">barataribeiro.com</a>
         </div>
+    </aside>
+
+    <div class="home__content">
+        <div class="cotent__header-wrapper">
+            <h1 class="content__header-title">Home</h1>
+            <p class="content__header-description">Welcome to the Book of Shadows - my blog aimed at providing an online
+                platform
+                for remotely accessing personal notes
+                regarding tech.</p>
+        </div>
+
+        <hr class="content__separator" />
+
+        <div class="content__posts-wrapper">
+            <div class="featured__posts-wrapper">
+                <% featuredPosts.forEach(post => { %>
+                <article id="post-<%= post._id %>" class="featured__post">
+                    <h2 class="featured__post-title"><%= post.title %></h2>
+                    <p class="featured__post-summary"><%= post.summary %></p>
+                    <a class="featured__post-link" href="/posts/<%= post._id %>/<%= post.slug %>">Read More</a>
+                </article>
+                <% }); %>
+            </div>
+        </div>
+
     </div>
+
 </section>
