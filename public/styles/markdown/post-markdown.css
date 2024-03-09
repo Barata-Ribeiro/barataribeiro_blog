@@ -12,40 +12,46 @@
 #post-preview h6 {
     color: var(--color-2);
     font-family: "JetBrains Mono", monospace;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
+    margin-block: 1.5rem;
+    line-height: 1.4;
 }
 
 #post-content h1,
 #post-preview h1 {
     margin-top: 0;
     font-size: 2.5em;
+    line-height: 1.2;
+    border-bottom: 0.125rem solid var(--color-10);
 }
 
 #post-content h2,
 #post-preview h2 {
     margin-top: 1.5rem;
-    font-size: 2em;
+    font-size: 2.1em;
+    line-height: 1.225;
+    border-bottom: 0.125rem solid var(--color-10);
 }
 
 #post-content h3,
 #post-preview h3 {
-    font-size: 1.75em;
+    font-size: 1.6em;
+    line-height: 1.43;
 }
 
 #post-content h4,
 #post-preview h4 {
-    font-size: 1.5em;
+    font-size: 1.4em;
+    font-size: 1.25em;
 }
 
 #post-content h5,
 #post-preview h5 {
-    font-size: 1.25em;
+    font-size: 1.2em;
 }
 
 #post-content h6,
 #post-preview h6 {
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 #post-content p,
@@ -81,6 +87,29 @@
     background-color: var(--color-1);
 }
 
+#post-content hr,
+#post-preview hr {
+    height: 0;
+    margin: 1.6rem 0;
+    overflow: hidden;
+    background: transparent;
+    border: 0;
+    border-bottom: 0.125rem solid var(--color-10);
+}
+
+#post-content hr::before,
+#post-preview hr::before {
+    display: table;
+    content: "";
+}
+
+#post-content hr::after,
+#post-preview hr::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
 #post-content pre,
 #post-preview pre {
     background-color: var(--color-9);
@@ -90,6 +119,12 @@
     line-height: 1.4;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.9em;
+    word-wrap: normal;
+}
+
+#post-content pre code:before,
+#post-preview pre code:before {
+    content: normal;
 }
 
 #post-content img,
@@ -126,9 +161,25 @@
 }
 
 #post-content ol ol,
+#post-preview ol ol,
+#post-content ul,
+ol,
 #post-preview ul,
 ol {
-    list-style-type: lower-latin;
+    list-style-type: lower-roman;
+    list-style-position: inside;
+    margin-left: 1.5rem;
+}
+
+#post-content ul ul ol,
+#post-content ul ol ol,
+#post-content ol ul ol,
+#post-content ol ol ol,
+#post-preview ul ul ol,
+#post-preview ul ol ol,
+#post-preview ol ul ol,
+#post-preview ol ol ol {
+    list-style-type: lower-alpha;
     list-style-position: inside;
     margin-left: 1.5rem;
 }
@@ -138,6 +189,30 @@ ol {
     display: list-item;
 }
 
+#post-content li > p,
+#post-preview li > p {
+    margin-top: 1.6rem;
+}
+
+#post-content dl dt,
+#post-preview dl dt {
+    margin-top: 1.6rem;
+    font-size: 1.6rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#post-content dd,
+#post-preview dd {
+    margin-left: 0;
+}
+
+#post-content dl dd,
+#post-preview dl dd {
+    padding: 0 1.6rem;
+    margin-bottom: 1.6rem;
+}
+
 #post-content blockquote,
 #post-preview blockquote {
     border-left: 0.4rem solid var(--color-11);
@@ -145,4 +220,47 @@ ol {
     color: var(--color-12);
     font-style: italic;
     margin: 1rem 0;
+}
+
+#post-content blockquote > :first-child,
+#post-preview blockquote > :first-child {
+    margin-top: 0;
+}
+
+#post-content blockquote > :last-child,
+#post-preview blockquote > :last-child {
+    margin-bottom: 0;
+}
+
+#post-content table,
+#post-preview table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: normal;
+    word-break: keep-all;
+}
+
+#post-content table th,
+#post-preview table th {
+    font-weight: bold;
+}
+
+#post-content table th,
+#post-preview table th,
+#post-content table td,
+#post-preview table td {
+    padding: 0.6rem 1.3rem;
+    border: 0.125rem solid var(--color-10);
+}
+
+#post-content table tr,
+#post-preview table tr {
+    background-color: var(--color-9);
+    border-top: 0.125rem solid var(--color-10);
+}
+
+#post-content table tr:nth-child(2n),
+#post-preview table tr:nth-child(2n) {
+    background-color: var(--color-11);
 }
