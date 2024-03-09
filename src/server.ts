@@ -30,15 +30,13 @@ import endpointPosts from "./endpoints/posts"
 import SetCurrentYear from "./middlewares/CurrentYear"
 import errorMiddleware from "./middlewares/ErrorMiddleware"
 import SetCacheControl from "./middlewares/SetCacheControl"
+import SetLocalsVariables from "./middlewares/SetLocalsVariables"
 
 const startServer = async () => {
     try {
         let app = express()
         const PORT = process.env.PORT || 3000
         let ENV = process.env.NODE_ENV || "development"
-
-        const DATA_REPO_ID = process.env.DATA_REPO_ID
-        const DATA_CATEGORY_ID = process.env.DATA_CATEGORY_ID
 
         await connectToDatabase()
 
@@ -78,12 +76,7 @@ const startServer = async () => {
                 })
             })
         )
-        app.use((_req, res, next) => (res.locals.nonce = uuidv4()) && next())
-        app.use((_req, res, next) => {
-            res.locals.dataRepoId = DATA_REPO_ID
-            res.locals.dataCategoryId = DATA_CATEGORY_ID
-            next()
-        })
+        app.use(SetLocalsVariables)
         app.use(
             helmet({
                 crossOriginResourcePolicy: false,
