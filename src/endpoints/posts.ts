@@ -2,6 +2,7 @@ import DOMPurify from "dompurify"
 import { NextFunction, Request, Response, Router } from "express"
 import { JSDOM } from "jsdom"
 import { marked } from "marked"
+import { Types } from "mongoose"
 import Post from "../api/v1/models/Post"
 import Tag from "../api/v1/models/Tag"
 import { parseDate, parseDateToISO } from "../api/v1/utils/Functions"
@@ -17,14 +18,16 @@ routes.get("/", async (req: Request, res: Response) => {
     limit = Number(limit)
     const skip = (page - 1) * limit
 
-    let tagIds = [] as any[]
+    let tagIdList: Types.ObjectId[] = []
+    let tagNameList: string[] = []
     if (tags) {
         tags = decodeURIComponent(tags)
         const tagList = tags.split(", ")
         const foundTags = await Tag.find({ name: { $in: tagList } }).exec()
-        tagIds = foundTags.map((tag) => tag._id)
+        tagIdList = foundTags.map((tag) => tag._id)
+        tagNameList = foundTags.map((tag) => tag.name)
     }
-    const query = tagIds.length > 0 ? { tags: { $in: tagIds } } : {}
+    const query = tagIdList.length > 0 ? { tags: { $in: tagIdList } } : {}
 
     const [posts, total] = await Promise.all([
         Post.find(query)
@@ -57,8 +60,8 @@ routes.get("/", async (req: Request, res: Response) => {
     const basePath = `${serverOrigin}/posts`
 
     const baseParams = new URLSearchParams({
-        limit: limit.toString(),
-        ...(tagIds.length > 0 && { tags: tagIds.join(",") })
+        ...(tagNameList.length > 0 && { tags: tagNameList.join(", ") }),
+        limit: limit.toString()
     })
     const nextPage = page * limit < total ? `${basePath}?${baseParams}&page=${page + 1}` : null
     const prevPage = page > 1 ? `${basePath}?${baseParams}&page=${page - 1}` : null
