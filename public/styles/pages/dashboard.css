@@ -106,9 +106,20 @@
     color: var(--color-1);
 }
 
+.dashboard__content__delete-account {
+    display: flex;
+    gap: 1rem;
+}
+
+.dashboard__content__delete-profile__link {
+    display: inline-block;
+    cursor: pointer;
+}
+
 .dashboard__content__posts__empty-link:hover,
 .dashboard__content__posts__list-item__link:hover,
-.dashboard__content__edit-profile__link:hover {
+.dashboard__content__edit-profile__link:hover,
+.dashboard__content__delete-profile__link:hover {
     background-color: var(--color-1);
     color: var(--color-5);
 }
