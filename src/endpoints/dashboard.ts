@@ -45,7 +45,7 @@ routes.get("/:username/edit-account", authMiddleware, async (req: Request, res: 
 
     if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
 
-    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not allowed to access this page."))
 
     try {
         const user = await User.findOne({ username }).select("-posts")
@@ -73,7 +73,7 @@ routes.get("/:username/posts", authMiddleware, async (req: Request, res: Respons
 
     if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
 
-    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not allowed to access this page."))
 
     try {
         const posts = await Post.find()
@@ -113,7 +113,7 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
 
     if (username !== sessionUser?.username) return next(new ForbiddenError("You are not allowed to access this page."))
 
-    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not authorized to delete this post."))
+    if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not allowed to access this page."))
 
     res.locals.user = sessionUser
 
@@ -141,8 +141,7 @@ routes.get(
         if (username !== sessionUser?.username)
             return next(new ForbiddenError("You are not allowed to access this page."))
 
-        if (sessionUser?.role !== "admin")
-            return next(new ForbiddenError("You are not authorized to delete this post."))
+        if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not allowed to access this page."))
 
         try {
             const post = await Post.findOne({ _id: postId, author: sessionUser._id })
