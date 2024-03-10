@@ -1,10 +1,14 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
+import mongoose from "mongoose"
 import {
     UserCreatePostRequestBody,
     UserEditPostRequestBody,
     UserEditRequestBody
 } from "../../../interfaces/UserInterfaces"
-import { User } from "../models/User"
+import { ForbiddenError, InternalServerError, NotFoundError } from "../../../middlewares/helpers/ApiErrors"
+import Post from "../models/Post"
+import Tag from "../models/Tag"
+import User, { User as IUser } from "../models/User"
 import { UserService } from "../services/UserService"
 export class UserController {
     private userService: UserService
@@ -14,7 +18,7 @@ export class UserController {
     }
 
     async updateAccount(req: Request, res: Response) {
-        const sessionUser = req.session.user?.data as User
+        const sessionUser = req.session.user?.data as IUser
         if (!req.session.user) return res.redirect("/auth/logout")
 
         const data = {
@@ -62,7 +66,7 @@ export class UserController {
     }
 
     async createPost(req: Request, res: Response) {
-        const sessionUser = req.session.user?.data as User
+        const sessionUser = req.session.user?.data as IUser
         if (!req.session.user) return res.redirect("/auth/logout")
 
         const data = {
@@ -95,7 +99,7 @@ export class UserController {
     }
 
     async editPost(req: Request, res: Response) {
-        const sessionUser = req.session.user?.data as User
+        const sessionUser = req.session.user?.data as IUser
         if (!req.session.user) return res.redirect("/auth/logout")
 
         const data = {
@@ -135,7 +139,43 @@ export class UserController {
         })
     }
 
-    async deleteAccount(_req: Request, _res: Response) {
-        // ...
+    async deleteAccount(req: Request, res: Response, next: NextFunction) {
+        if (!req.session.user) return res.redirect("/auth/logout")
+
+        const sessionUser = req.session.user?.data as IUser
+        const { username } = req.params
+        if (!username) return next(new NotFoundError("Missing post ID."))
+
+        const session = await mongoose.startSession()
+        session.startTransaction()
+
+        try {
+            const userToDelete = await User.findOne({ username })
+            if (!userToDelete) {
+                await session.abortTransaction()
+                session.endSession()
+                return next(new NotFoundError("User not found."))
+            }
+
+            if (userToDelete._id.toString() !== sessionUser._id.toString()) {
+                await session.abortTransaction()
+                session.endSession()
+                return next(new ForbiddenError("You are not authorized to delete this account."))
+            }
+
+            await Tag.updateMany({}, { $pull: { posts: { author: userToDelete._id } } }, { session })
+            await Post.deleteMany({ author: userToDelete._id }, { session })
+            await userToDelete.deleteOne({ session })
+
+            await session.commitTransaction()
+            session.endSession()
+
+            return res.status(204).redirect("/auth/logout")
+        } catch (error) {
+            await session.abortTransaction()
+            session.endSession()
+            console.error(error)
+            return next(new InternalServerError("An error occurred while deleting your account."))
+        }
     }
 }
