@@ -8,7 +8,8 @@
         "start": "node dist/server.js",
         "start:tsnode": "ts-node src/server.ts",
         "dev": "nodemon src/server.ts",
-        "build": "rm -rf dist && tsc --build && cp -r src/views dist/views",
+        "build:dev": "rm -rf dist && tsc --build && cp -r src/views dist/views",
+        "build": "tsc --build && cp -r src/views dist/views",
         "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
     },
     "repository": {
