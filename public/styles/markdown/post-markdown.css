@@ -112,14 +112,12 @@
 
 #post-content pre,
 #post-preview pre {
-    background-color: var(--color-9);
-    border: 0.125rem solid var(--color-10);
-    padding: 1rem;
-    overflow: auto;
-    line-height: 1.4;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.9em;
-    word-wrap: normal;
+    border-radius: 0.3rem;
+}
+
+#post-content pre code,
+#post-preview pre code {
+    font-family: "IBM Plex Mono", monospace !important;
 }
 
 #post-content pre code:before,
