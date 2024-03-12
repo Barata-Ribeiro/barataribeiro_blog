@@ -17,7 +17,7 @@
             <% } %>
             <a class="post__info-link" href="/posts">Back &#187;</a>
 
-            <span class="post__info-createdAt"><%= post.createdAt %></span>
+            <time class="post__info-createdAt" datetime="<%= post.createdAtISO %>"><%= post.createdAt %></time>
         </div>
     </header>
 
