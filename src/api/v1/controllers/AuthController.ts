@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt"
+// import bcrypt from "bcrypt"
 import { NextFunction, Request, Response } from "express"
 import { sign } from "jsonwebtoken"
-import mongoose from "mongoose"
+// import mongoose from "mongoose"
 import { InternalServerError } from "../../../middlewares/helpers/ApiErrors"
 import User from "../models/User"
 
@@ -69,37 +69,39 @@ export class AuthController {
             description: "Register a new account."
         }
 
-        const { username, email, password } = req.body
-        if (!username || !email || !password)
-            return res.render("pages/auth/register", { ...head, error: "Username, email and password are required." })
+        return res.render("pages/auth/register", { ...head, error: "User registration is currently not allowed." })
 
-        const doesUserExistByUsername = await User.exists({ username })
-        if (doesUserExistByUsername)
-            return res.render("pages/auth/register", {
-                ...head,
-                error: "An account with this username already exists."
-            })
+        // const { username, email, password } = req.body
+        // if (!username || !email || !password)
+        //     return res.render("pages/auth/register", { ...head, error: "Username, email and password are required." })
 
-        const doesUserExistByEmail = await User.exists({ email })
-        if (doesUserExistByEmail)
-            return res.render("pages/auth/register", { ...head, error: "An account with this email already exists." })
+        // const doesUserExistByUsername = await User.exists({ username })
+        // if (doesUserExistByUsername)
+        //     return res.render("pages/auth/register", {
+        //         ...head,
+        //         error: "An account with this username already exists."
+        //     })
 
-        const salt = bcrypt.genSaltSync(10)
-        const hashPassword = bcrypt.hashSync(password, salt)
+        // const doesUserExistByEmail = await User.exists({ email })
+        // if (doesUserExistByEmail)
+        //     return res.render("pages/auth/register", { ...head, error: "An account with this email already exists." })
 
-        try {
-            await User.create({ username, email, password: hashPassword })
-            return res.status(201).redirect("/auth/login")
-        } catch (error) {
-            console.error(error)
-            if (error instanceof mongoose.Error.ValidationError) {
-                const messages = Object.values(error.errors).map(
-                    (err) => `${err.name}: ${this.capitalizeFirstLetter(err.path)} ${err.message}.`
-                )
-                return res.render("pages/auth/register", { ...head, error: messages.join(" ") })
-            }
-            return res.render("pages/auth/register", { ...head, error: "Failed to create user account." })
-        }
+        // const salt = bcrypt.genSaltSync(10)
+        // const hashPassword = bcrypt.hashSync(password, salt)
+
+        // try {
+        //     await User.create({ username, email, password: hashPassword })
+        //     return res.status(201).redirect("/auth/login")
+        // } catch (error) {
+        //     console.error(error)
+        //     if (error instanceof mongoose.Error.ValidationError) {
+        //         const messages = Object.values(error.errors).map(
+        //             (err) => `${err.name}: ${this.capitalizeFirstLetter(err.path)} ${err.message}.`
+        //         )
+        //         return res.render("pages/auth/register", { ...head, error: messages.join(" ") })
+        //     }
+        //     return res.render("pages/auth/register", { ...head, error: "Failed to create user account." })
+        // }
     }
 
     async logout(req: Request, res: Response, next: NextFunction) {
@@ -123,7 +125,7 @@ export class AuthController {
         })
     }
 
-    private capitalizeFirstLetter(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
+    // private capitalizeFirstLetter(str: string) {
+    //     return str.charAt(0).toUpperCase() + str.slice(1)
+    // }
 }
