@@ -23,7 +23,7 @@ routes.get("/", async (req: Request, res: Response) => {
     if (tags) {
         tags = decodeURIComponent(tags)
         const tagList = tags.split(", ")
-        const foundTags = await Tag.find({ name: { $in: tagList } }).exec()
+        const foundTags = await Tag.find({ name: { $in: tagList } })
         tagIdList = foundTags.map((tag) => tag._id)
         tagNameList = foundTags.map((tag) => tag.name)
     }
@@ -36,8 +36,8 @@ routes.get("/", async (req: Request, res: Response) => {
             .populate({ path: "author", select: "username displayName -_id" })
             .populate({ path: "tags", select: "name -_id" })
             .skip(skip)
-            .limit(limit)
-            .exec(),
+            .limit(limit),
+
         Post.countDocuments(query)
     ])
 
@@ -96,7 +96,6 @@ routes.get("/:postId/:postSlug", async (req: Request, res: Response, next: NextF
     const post = await Post.findById({ _id: postId })
         .populate({ path: "author", select: "username displayName -_id" })
         .populate({ path: "tags", select: "name -_id" })
-        .exec()
     if (!post) return next(new NotFoundError("Post not found."))
     if (post.slug !== postSlug) return next(new NotFoundError("Post not found."))
 
