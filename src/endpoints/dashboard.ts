@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express"
 import Post from "../api/v1/models/Post"
+import Tag from "../api/v1/models/Tag"
 import User from "../api/v1/models/User"
 import { parseDate, parseDateToISO } from "../api/v1/utils/Functions"
 import authMiddleware from "../middlewares/AuthMiddleware"
@@ -115,13 +116,22 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
 
     if (sessionUser?.role !== "admin") return next(new ForbiddenError("You are not allowed to access this page."))
 
+    const avaialbleTags = await Tag.find().select("name posts -_id")
+    const tags = avaialbleTags.map((tag) => {
+        return {
+            name: tag.name,
+            posts: tag.posts.length
+        }
+    })
+
     res.locals.user = sessionUser
 
     const data = {
         title: `New Post - ${username}`,
         description: `Create a new post, ${username}! Don't forget to read the rules before posting.`,
         user: res.locals.user,
-        loadPrismJS: true,
+        loadprismCSS: true,
+        tags,
         error: null
     }
 
@@ -152,7 +162,7 @@ routes.get(
                 description: `Edit your post, ${username}! Don't forget to read the rules before posting.`,
                 user: sessionUser,
                 post,
-                loadPrismJS: true,
+                loadPrismCSS: true,
                 error: null
             }
 
