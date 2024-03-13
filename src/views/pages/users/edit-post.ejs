@@ -55,6 +55,7 @@
         </article>
     </div>
 </section>
+<script nonce="<%= nonce %>" src="https://cdn.jsdelivr.net/npm/prismjs@1.29/prism.min.js"></script>
 <script type="module" nonce="<%= nonce %>">
     import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
     import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.9/+esm';
@@ -82,15 +83,24 @@
             summaryTotalChars.textContent = 150 - summaryEl.value.length;
 
 
-        const updatePreview = async () => {
-            const parsedContent = await marked.parse(contentEl.value, {
-                async: true,
+            const updatePreview = () => {
+            marked.use({
+                pedantic: false,
                 gfm: true,
-                breaks: true
+                breaks: true,
+                highlight: function(code, lang) {
+                    if (Prism.languages[lang])
+                        return Prism.highlight(code, Prism.languages[lang], lang);
+
+                    return code;
+                }
             });
-            const sanitizedContent = await DOMPurify.sanitize(parsedContent);
+
+            const parsedContent = marked.parse(contentEl.value);
+            const sanitizedContent = DOMPurify.sanitize(parsedContent);
 
             postPreview.innerHTML = sanitizedContent;
+            Prism.highlightAllUnder(postPreview);
         };
 
         summaryEl.addEventListener('input', updateSummaryChars);
