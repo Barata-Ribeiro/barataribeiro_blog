@@ -4,8 +4,52 @@ import { ForbiddenError, InternalServerError, NotFoundError } from "../../../mid
 import Post from "../models/Post"
 import Tag from "../models/Tag"
 import User, { User as IUser } from "../models/User"
+import { parseDate, parseDateToISO } from "../utils/Functions"
 
 export class PostController {
+    public async getPostsForPortfolio(req: Request, res: Response) {
+        try {
+            const allowedOrigin = "https://barataribeiro.com/"
+            const requestOrigin = req.headers.origin
+            if (requestOrigin !== allowedOrigin)
+                return res.status(403).json({
+                    success: false,
+                    message: "Forbidden. Access denied."
+                })
+
+            const twoLatestPosts = await Post.find()
+                .sort({ createdAt: -1 })
+                .limit(2)
+                .populate("tags", "name -_id")
+                .populate("author", "username displayName -_id")
+            if (twoLatestPosts.length <= 0)
+                return res.status(204).json({
+                    success: true,
+                    message: "No posts found."
+                })
+
+            const parsedPosts = twoLatestPosts.map((post) => ({
+                ...post.toObject(),
+                createdAtISO: parseDateToISO(post.createdAt),
+                updatedAtISO: parseDateToISO(post.updatedAt),
+                createdAt: parseDate(post.createdAt),
+                updatedAt: parseDate(post.updatedAt)
+            }))
+
+            return res.status(200).json({
+                success: true,
+                message: "Posts fetched successfully.",
+                data: parsedPosts
+            })
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({
+                success: false,
+                message: "An error occurred while fetching posts."
+            })
+        }
+    }
+
     public async deletePost(req: Request, res: Response, next: NextFunction) {
         if (!req.session.user) return res.redirect("/auth/logout")
 
