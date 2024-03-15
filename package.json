@@ -1,7 +1,7 @@
 {
-    "name": "barata-ribeiro_blog",
+    "name": "barataribeiro_blog",
     "version": "1.0.0",
-    "description": "Personal blog of Barata-Ribeiro",
+    "description": "Personal blog of Barata-Ribeiro, built with Node.js, Express.js, MongoDB, EJS, and TypeScript.",
     "main": "dist/server.js",
     "private": true,
     "scripts": {
@@ -17,26 +17,26 @@
         "url": "git+https://github.com/Barata-Ribeiro/barata-ribeiro_blog.git"
     },
     "keywords": [
-        "express",
-        "mongodb",
-        "api",
-        "apirestful",
+        "nodejs",
         "blog",
-        "restful",
-        "crud",
-        "ejs",
-        "expressjs",
+        "api",
         "jwt",
-        "mongoose",
+        "crud",
         "node",
-        "nodejs"
+        "typescript",
+        "mongodb",
+        "mongoose",
+        "expressjs",
+        "ejs",
+        "ejscript",
+        "ejs-express"
     ],
     "author": "Barata-Ribeiro",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Barata-Ribeiro/barata-ribeiro_blog/issues"
     },
-    "homepage": "https://github.com/Barata-Ribeiro/barata-ribeiro_blog#readme",
+    "homepage": ".",
     "dependencies": {
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.2",
@@ -79,7 +79,7 @@
         "@types/method-override": "^0.0.35",
         "@types/morgan": "^1.9.9",
         "@types/multer": "^1.4.11",
-        "@types/node": "^20.11.25",
+        "@types/node": "^20.11.28",
         "@types/serve-favicon": "^2.5.7",
         "@types/uuid": "^9.0.8",
         "@types/yargs": "^17.0.32",
