@@ -10,7 +10,7 @@
 
         <%- include('./search.ejs') %>
 
-        <% if (locals.user) { %>
+        <% if (typeof locals.user !== "undefined" && locals.user) { %>
         <a id="button-dashboardBig" href="/dashboard/<%= locals.user.username %>" class="header__button"
             aria-label="Dashboard" role="button">Dashboard</a>
         <a id="button-dashboardSmall" href="/dashboard/<%= locals.user.username %>" class="header__button"

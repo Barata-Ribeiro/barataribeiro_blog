@@ -53,7 +53,8 @@
             </fieldset>
 
             <div class="form__group">
-                <button id="editButton" name="editButton" type="submit" class="form__submit">Save Changes</button>
+                <button id="editButton" name="editButton" type="submit" class="form__submit"
+                    aria-label="Save Changes">Save Changes</button>
                 <% if (error) { %>
                 <span id="error-message" role="alert" aria-label="<%= error %>"
                     class="form__error-message"><%= error %></span>

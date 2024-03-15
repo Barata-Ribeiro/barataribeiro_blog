@@ -56,14 +56,16 @@
 
             <div class="form__group">
                 <div class="form__subgroup">
-                    <button id="createPostButton" name="createPostButton" type="submit" class="form__submit">Publish
+                    <button id="createPostButton" name="createPostButton" type="submit" class="form__submit"
+                        aria-label="Publish Post">Publish
                         Post</button>
 
                     <div class="form__subgroup-wrapper" role="group" aria-label="Draft options">
-                        <button id="saveDraftButton" name="saveDraftButton" class="form__regular-button" type="button">
+                        <button id="saveDraftButton" name="saveDraftButton" class="form__regular-button" type="button"
+                            aria-label="Save Draft">
                             Draft</button>
                         <button id="deleteDraftButton" name="deleteDraftButton" class="form__regular-button"
-                            type="button">&#10005</button>
+                            type="button" aria-label="Delete Draft">&#10005</button>
                     </div>
                 </div>
                 <% if (error) { %>

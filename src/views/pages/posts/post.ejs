@@ -1,4 +1,4 @@
-<section id="individual-post" role="article" aria-labelledby="post-title" class="post__individual-post">
+<section id="individual-post" role="region" aria-labelledby="post-title" class="post__individual-post">
     <header class="post__header">
         <div class="post__header__title">
             <h1 id="post-title" class="post__info-title"><%= post.title %></h1>
@@ -7,7 +7,7 @@
             </span>
         </div>
 
-        <div class="post__header__controls">
+        <div class="post__header__controls" aria-label="Post Controls">
             <% if (isUserLoggedIn && user.username === post.author.username) { %>
             <a class="post__info-link" href="/dashboard/<%= user.username %>/posts/<%= post._id %>/edit-post">Edit</a>
             <form action="/posts/<%= post._id %>/delete" method="POST" style="display: inline;">
@@ -15,24 +15,25 @@
                 <button type="submit" class="post__info-link">Delete</button>
             </form>
             <% } %>
-            <a class="post__info-link" href="/posts">Back &#187;</a>
+            <a class="post__info-link" href="/posts" aria-label="Go back to posts">&#171; Back</a>
 
             <time class="post__info-createdAt" datetime="<%= post.createdAtISO %>"><%= post.createdAt %></time>
         </div>
     </header>
 
-    <article id="post-content" class="post__content" role="region" aria-label="Post Content">
+    <article id="post-content" class="post__content" role="article" aria-label="Post Content">
         <%- post.content %>
 
         <div class="post__tags">
             <span class="post__tags_span">Tags: </span>
             <% post.tags.forEach(function(tag) { %>
-            <a href="/posts?tags=<%= tag.name %>" class="post__tag">#<%= tag.name %></a>
+            <a href="/posts?tags=<%= tag.name %>" class="post__tag"
+                aria-label="Tag: <%= tag.name %>">#<%= tag.name %></a>
             <% }); %>
         </div>
     </article>
 
-    <div class="post__comments">
+    <div class="post__comments" aria-label="Comments Section">
         <script nonce="<%= nonce %>" src="https://giscus.app/client.js" data-repo="Barata-Ribeiro/barataribeiro_blog"
             data-repo-id="<%= dataRepoId %>" data-category="Announcements" data-category-id="<%= dataCategoryId %>"
             data-mapping="title" data-strict="0" data-reactions-enabled="0" data-emit-metadata="0"
