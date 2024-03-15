@@ -9,6 +9,16 @@
     <% if (typeof keywords !== 'undefined' && keywords) { %>
     <meta name="keywords" content="<%= keywords %>" />
     <% } %>
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content="<%= title %>" />
+    <meta property="og:site_name" content="Book of Shadows" />
+    <meta property="og:description" content="<%= description %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blog.barataribeiro.com/" />
+    <meta property="og:locale" content="en_US.utf-8" />
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -27,7 +37,7 @@
 <body>
     <%- include('../partials/header.ejs') %>
 
-    <main class="container"><%- body %></main>
+    <main class="container" role="main"><%- body %></main>
 
     <%- include('../partials/footer.ejs') %>
 </body>
