@@ -7,7 +7,7 @@ routes.get("/register", (req, res) => {
     if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
     res.status(200).render("pages/auth/register", {
-        title: "Register",
+        title: "Register | Book of Shadows",
         description: "Register a new account.",
         error: null
     })
@@ -18,7 +18,7 @@ routes.get("/login", (req, res) => {
     if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
     res.status(200).render("pages/auth/login", {
-        title: "Login",
+        title: "Login | Book of Shadows",
         description: "Login to your account.",
         error: null
     })
