@@ -13,15 +13,15 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
             .populate({ path: "author", select: "username displayName -_id" })
             .limit(8)
 
-        const tags = await Tag.find().select("name -_id")
+        const tags = await Tag.find().select("name slug -_id")
 
-        if (!posts || posts.length === 0 || !tags) {
+        if (!posts || posts.length === 0) {
             return res.status(200).render("index", {
-                title: "Home",
+                title: "Home | Book of Shadows",
                 description: "Welcome to the home page.",
                 featuredPosts: [],
                 nextSixPosts: [],
-                tags: []
+                tags: tags ? tags : []
             })
         }
 
@@ -29,7 +29,7 @@ routes.get("/", async (_req: Request, res: Response, next: NextFunction) => {
         const nextSixPosts = posts.slice(2, 8)
 
         const data = {
-            title: "Book of Shadows - Home",
+            title: "Home | Book of Shadows",
             description:
                 "Welcome to my Book of Shadows. This blog was created to share my thoughts, ideas, and experiences with anything programming related. I hope you enjoy your stay here and find something that resonates with you.",
             keywords:

@@ -79,8 +79,9 @@ export class UserService {
             const tagsArray = tags.split(", ").map((tag) => tag.trim())
             const tagsIds = await Promise.all(
                 tagsArray.map(async (tagName) => {
-                    let tag = await Tag.findOne({ name: tagName })
-                    if (!tag) tag = await Tag.create({ name: tagName })
+                    let slug = generateSlug(tagName)
+                    let tag = await Tag.findOne({ slug })
+                    if (!tag) tag = await Tag.create({ name: tagName, slug })
 
                     return tag._id
                 })
