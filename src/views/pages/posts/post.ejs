@@ -27,7 +27,7 @@
         <div class="post__tags">
             <span class="post__tags_span">Tags: </span>
             <% post.tags.forEach(function(tag) { %>
-            <a href="/posts?tags=<%= tag.name %>" class="post__tag"
+            <a href="/posts?tags=<%= tag.slug %>" class="post__tag"
                 aria-label="Tag: <%= tag.name %>">#<%= tag.name %></a>
             <% }); %>
         </div>

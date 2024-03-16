@@ -5,7 +5,7 @@
             <ul class="aside__tag-list">
                 <% tags.forEach(tag => { %>
                 <li class="aside__tag-name">
-                    <a class="aside__tag-link" href="/posts?tags=<%= tag.name %>"><%= tag.name %></a>
+                    <a class="aside__tag-link" href="/posts?tags=<%= tag.slug %>"><%= tag.name %></a>
                 </li>
                 <% }); %>
             </ul>

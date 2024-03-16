@@ -72,18 +72,17 @@
 
         const draft = localStorage.getItem('edit-draft');
         if (draft) {
-            const { title, summary, content, tags } = JSON.parse(draft);
+            const { title, summary, content } = JSON.parse(draft);
             document.getElementById("title").value = title;
             document.getElementById("summary").value = summary;
             document.getElementById("content").value = content;
-            document.getElementById("tags").value = tags;
         }
 
         const updateSummaryChars = () =>
             summaryTotalChars.textContent = 150 - summaryEl.value.length;
 
 
-            const updatePreview = () => {
+        const updatePreview = () => {
             marked.use({
                 pedantic: false,
                 gfm: true,
