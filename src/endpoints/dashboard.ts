@@ -129,8 +129,8 @@ routes.get("/:username/posts/new-post", authMiddleware, async (req: Request, res
     const data = {
         title: `New Post - ${username}`,
         description: `Create a new post, ${username}! Don't forget to read the rules before posting.`,
+        loadPrismCSS: true,
         user: res.locals.user,
-        loadprismCSS: true,
         tags,
         error: null
     }
@@ -160,9 +160,9 @@ routes.get(
             const data = {
                 title: `Edit Post - ${username}`,
                 description: `Edit your post, ${username}! Don't forget to read the rules before posting.`,
+                loadPrismCSS: true,
                 user: sessionUser,
                 post,
-                loadPrismCSS: true,
                 error: null
             }
 
