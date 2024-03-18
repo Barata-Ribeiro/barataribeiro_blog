@@ -46,6 +46,7 @@
 /* Post Content */
 .post__content {
     border-top: 0.125rem solid var(--color-3);
+    padding-top: 1.6rem;
     margin-bottom: 1.6rem;
 }
 
