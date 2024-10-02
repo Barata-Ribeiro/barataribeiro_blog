@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import mongoose from "mongoose"
+import mongoose, { ObjectId } from "mongoose"
 import { ForbiddenError, InternalServerError, NotFoundError } from "../../../middlewares/helpers/ApiErrors"
 import Post from "../models/Post"
 import Tag from "../models/Tag"
@@ -12,7 +12,7 @@ export class PostController {
             const allowedOrigin = "https://barataribeiro.com/"
             const requestOrigin = req.headers.origin
             if (requestOrigin !== allowedOrigin)
-                return res.status(403).json({
+                return res.sendStatus(403).json({
                     success: false,
                     message: "Forbidden. Access denied."
                 })
@@ -23,7 +23,7 @@ export class PostController {
                 .populate("tags", "name -_id")
                 .populate("author", "username displayName -_id")
             if (twoLatestPosts.length <= 0)
-                return res.status(204).json({
+                return res.sendStatus(204).json({
                     success: true,
                     message: "No posts found."
                 })
@@ -36,14 +36,14 @@ export class PostController {
                 updatedAt: parseDate(post.updatedAt)
             }))
 
-            return res.status(200).json({
+            return res.sendStatus(200).json({
                 success: true,
                 message: "Posts fetched successfully.",
                 data: parsedPosts
             })
         } catch (error) {
             console.error(error)
-            return res.status(500).json({
+            return res.sendStatus(500).json({
                 success: false,
                 message: "An error occurred while fetching posts."
             })
@@ -66,13 +66,13 @@ export class PostController {
             const post = await Post.findById(postId).populate("author", "_id username")
             if (!post) {
                 await session.abortTransaction()
-                session.endSession()
+                await session.endSession()
                 return next(new NotFoundError("Post not found."))
             }
 
-            if (!post.author || post.author._id.toString() !== sessionUser._id.toString()) {
+            if (!post.author || post.author._id.toString() !== (sessionUser._id as ObjectId).toString()) {
                 await session.abortTransaction()
-                session.endSession()
+                await session.endSession()
                 return next(new ForbiddenError("You are not the author of this post."))
             }
 
@@ -81,12 +81,12 @@ export class PostController {
             await post.deleteOne({ session })
 
             await session.commitTransaction()
-            session.endSession()
+            await session.endSession()
 
-            res.status(200).redirect(`/dashboard/${sessionUser.username}`)
+            res.sendStatus(200).redirect(`/dashboard/${sessionUser.username}`)
         } catch (error) {
             await session.abortTransaction()
-            session.endSession()
+            await session.endSession()
             console.error(error)
             return next(new InternalServerError("An error occurred while deleting the post"))
         }

@@ -8,7 +8,7 @@ import User from "../models/User"
 export class AuthController {
     async login(req: Request, res: Response) {
         const sessionData = req.session.user
-        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
+        if (sessionData?.isLoggedIn) return res.sendStatus(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
         const head = {
             title: "Login",
@@ -56,13 +56,13 @@ export class AuthController {
 
             res.locals.user = user
 
-            return res.status(302).redirect(`/dashboard/${user.username}`)
+            return res.sendStatus(302).redirect(`/dashboard/${user.username}`)
         })
     }
 
     async register(req: Request, res: Response) {
         const sessionData = req.session.user
-        if (sessionData?.isLoggedIn) return res.status(302).redirect(`/dashboard/${sessionData?.data?.username}`)
+        if (sessionData?.isLoggedIn) return res.sendStatus(302).redirect(`/dashboard/${sessionData?.data?.username}`)
 
         const head = {
             title: "Register",
@@ -73,7 +73,8 @@ export class AuthController {
 
         // const { username, email, password } = req.body
         // if (!username || !email || !password)
-        //     return res.render("pages/auth/register", { ...head, error: "Username, email and password are required." })
+        //     return res.render("pages/auth/register", { ...head, error: "Username, email and password are required."
+        // })
 
         // const doesUserExistByUsername = await User.exists({ username })
         // if (doesUserExistByUsername)
@@ -84,14 +85,15 @@ export class AuthController {
 
         // const doesUserExistByEmail = await User.exists({ email })
         // if (doesUserExistByEmail)
-        //     return res.render("pages/auth/register", { ...head, error: "An account with this email already exists." })
+        //     return res.render("pages/auth/register", { ...head, error: "An account with this email already exists."
+        // })
 
         // const salt = bcrypt.genSaltSync(10)
         // const hashPassword = bcrypt.hashSync(password, salt)
 
         // try {
         //     await User.create({ username, email, password: hashPassword })
-        //     return res.status(201).redirect("/auth/login")
+        //     return res.sendStatus(201).redirect("/auth/login")
         // } catch (error) {
         //     console.error(error)
         //     if (error instanceof mongoose.Error.ValidationError) {
@@ -121,7 +123,7 @@ export class AuthController {
             res.locals.user = null
             res.clearCookie("connect.sid")
 
-            return res.status(302).redirect("/auth/login")
+            return res.sendStatus(302).redirect("/auth/login")
         })
     }
 

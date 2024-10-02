@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import mongoose from "mongoose"
+import mongoose, { ObjectId } from "mongoose"
 import {
     UserCreatePostRequestBody,
     UserEditPostRequestBody,
@@ -10,6 +10,7 @@ import Post from "../models/Post"
 import Tag from "../models/Tag"
 import User, { User as IUser } from "../models/User"
 import { UserService } from "../services/UserService"
+
 export class UserController {
     private userService: UserService
 
@@ -153,13 +154,13 @@ export class UserController {
             const userToDelete = await User.findOne({ username })
             if (!userToDelete) {
                 await session.abortTransaction()
-                session.endSession()
+                await session.endSession()
                 return next(new NotFoundError("User not found."))
             }
 
-            if (userToDelete._id.toString() !== sessionUser._id.toString()) {
+            if ((userToDelete._id as ObjectId).toString() !== (sessionUser._id as ObjectId).toString()) {
                 await session.abortTransaction()
-                session.endSession()
+                await session.endSession()
                 return next(new ForbiddenError("You are not authorized to delete this account."))
             }
 
@@ -168,12 +169,12 @@ export class UserController {
             await userToDelete.deleteOne({ session })
 
             await session.commitTransaction()
-            session.endSession()
+            await session.endSession()
 
             return res.status(204).redirect("/auth/logout")
         } catch (error) {
             await session.abortTransaction()
-            session.endSession()
+            await session.endSession()
             console.error(error)
             return next(new InternalServerError("An error occurred while deleting your account."))
         }

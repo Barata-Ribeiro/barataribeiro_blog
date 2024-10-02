@@ -17,7 +17,7 @@ import favicon from "serve-favicon"
 import { v4 as uuidv4 } from "uuid"
 
 // Custom Imports
-import { connectToDatabase, connection } from "./api/v1/config/database"
+import { connection, connectToDatabase } from "./api/v1/config/database"
 import authRoutes from "./api/v1/routes/AuthRoutes"
 import postsRoutes from "./api/v1/routes/PostsRoutes"
 import usersRoutes from "./api/v1/routes/UsersRoutes"
@@ -63,7 +63,7 @@ const startServer = async () => {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                     sameSite: "strict",
-                    maxAge: 1 * 24 * 60 * 60 * 1000
+                    maxAge: 24 * 60 * 60 * 1000
                 },
                 store: MongoStore.create({
                     client: connection.getClient() as any,
@@ -72,7 +72,7 @@ const startServer = async () => {
                     stringify: false,
                     autoRemove: "interval",
                     autoRemoveInterval: 10,
-                    ttl: 1 * 24 * 60 * 60
+                    ttl: 24 * 60 * 60
                 })
             })
         )
@@ -124,7 +124,7 @@ const startServer = async () => {
 
         // PAGE 404
         app.use((_req, res) =>
-            res.status(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
+            res.sendStatus(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
         )
 
         app.use(errorMiddleware)
