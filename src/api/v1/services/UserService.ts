@@ -25,7 +25,7 @@ export class UserService {
             const user = await User.findOne({ username }).select("+password")
             if (!user) return { error: "User not found." }
 
-            const passwordMatches = await user.comparePassword(currentPassword!)
+            const passwordMatches = user.comparePassword(currentPassword!)
             if (!passwordMatches) return { error: "Current password is incorrect." }
 
             if (newUsername) {
@@ -49,9 +49,7 @@ export class UserService {
             if (newPassword && confirmNewPassword) {
                 if (newPassword !== confirmNewPassword) return { error: "New passwords do not match." }
 
-                const hashedNewPassword = await user.hashPassword(newPassword)
-
-                user.password = hashedNewPassword
+                user.password = user.hashPassword(newPassword)
             }
 
             if (bio) user.bio = bio.trim()

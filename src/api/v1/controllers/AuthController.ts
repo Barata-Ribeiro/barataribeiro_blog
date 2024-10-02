@@ -23,7 +23,7 @@ export class AuthController {
             })
 
         const user = await User.findOne({ username }).select("+password")
-        const checkPassword = await user?.comparePassword(password)
+        const checkPassword = user?.comparePassword(password)
         if (!user || !checkPassword)
             return res.render("pages/auth/login", { ...head, error: "Invalid username or password." })
 
@@ -40,7 +40,7 @@ export class AuthController {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000
         })
 
         req.session.user = {

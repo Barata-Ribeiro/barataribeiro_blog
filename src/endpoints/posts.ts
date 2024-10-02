@@ -104,7 +104,7 @@ routes.get("/:postId/:postSlug", async (req: Request, res: Response, next: NextF
         breaks: true
     })
 
-    post.content = await purify.sanitize(post.content)
+    post.content = purify.sanitize(post.content)
 
     const data = {
         title: `${post.title} | Book of Shadows`,
