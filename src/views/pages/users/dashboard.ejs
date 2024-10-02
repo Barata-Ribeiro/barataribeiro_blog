@@ -4,9 +4,9 @@
     <div class="dashboard__content">
         <div>
             <% if (user.displayName && user.displayName.trim().length > 0) { %>
-            <h1 class="dashboard__content__title">Welcome, <%= user.displayName %>!</h1>
+                <h1 class="dashboard__content__title">Welcome, <%= user.displayName %>!</h1>
             <% } else { %>
-            <h1 class="dashboard__content__title">Welcome, <%= user.username %>!</h1>
+                <h1 class="dashboard__content__title">Welcome, <%= user.username %>!</h1>
             <% } %>
             <p class="dashboard__content__description">What would you like to do today?</p>
         </div>
@@ -15,23 +15,24 @@
             <h2 class="dashboard__content__posts__title">Latest Posts</h2>
 
             <% if (latestPosts.length > 0) { %>
-            <ul class="dashboard__content__posts__list" role="list">
-                <% latestPosts.forEach(post => { %>
-                <li class="dashboard__content__posts__list-item" role="listitem">
-                    <a class="dashboard__content__posts__list-item__link" href="/posts/<%= post._id %>/<%= post.slug %>"
-                        aria-label="View Post: <%= post.title %>"><%= post.title %></a>
-                    <p class="dashboard__content__posts__list-item__description"><%= post.summary %></p>
-                    <span class="dashboard__content__posts__list-item__views">Views: <%= post.totalViews %></span>
-                </li>
-                <% }) %>
-            </ul>
+                <ul class="dashboard__content__posts__list" role="list">
+                    <% latestPosts.forEach(post => { %>
+                        <li class="dashboard__content__posts__list-item" role="listitem">
+                            <a class="dashboard__content__posts__list-item__link"
+                               href="/posts/<%= post._id %>/<%= post.slug %>"
+                               aria-label="View Post: <%= post.title %>"><%= post.title %></a>
+                            <p class="dashboard__content__posts__list-item__description"><%= post.summary %></p>
+                            <span class="dashboard__content__posts__list-item__views">Views: <%= post.totalViews %></span>
+                        </li>
+                    <% }) %>
+                </ul>
             <% } else { %>
-            <div class="dashboard__content__posts__empty">
+                <div class="dashboard__content__posts__empty">
                 <p class="dashboard__content__posts__empty-text">No posts found...</p>
                 <a class="dashboard__content__posts__empty-link" href="/dashboard/<%= user.username %>/posts/new-post"
-                    aria-label="Create Your First Post">Start posting now!</a>
+                   aria-label="Create Your First Post">Start posting now!</a>
             </div>
-            <% }%>
+            <% } %>
 
             <article class="dashboard__content__user-profile" role="article" aria-labelledby="userProfileTitle">
                 <h2 id="userProfileTitle" class="dashboard__content__user-profile__title">User Profile</h2>
@@ -41,7 +42,9 @@
                         <%= user.username %></p>
                 </div>
                 <% if (user.displayName && user.displayName.trim().length > 0) { %>
-                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="displayNameLabel">
+                    <div class="dashboard__content__user-profile__details"
+                         role="region"
+                         aria-labelledby="displayNameLabel">
                     <p id="displayNameLabel" class="dashboard__content__user-profile__details__label">Display Name:</p>
                     <p class="dashboard__content__user-profile__details__value" aria-labelledby="displayNameLabel">
                         <%= user.displayName %></p>
@@ -53,7 +56,7 @@
                         <%= user.email %></p>
                 </div>
                 <% if (user.bio && user.bio.trim().length > 0) { %>
-                <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="bioLabel">
+                    <div class="dashboard__content__user-profile__details" role="region" aria-labelledby="bioLabel">
                     <p id="bioLabel" class="dashboard__content__user-profile__details__label">Bio:</p>
                     <p class="dashboard__content__user-profile__details__value" aria-labelledby="bioLabel">
                         <%= user.bio %></p>
@@ -73,12 +76,14 @@
                 <p class="dashboard__content__edit-profile">
                     Do you wish to edit your profile?
                     <a class="dashboard__content__edit-profile__link"
-                        href="/dashboard/<%= user.username %>/edit-account" aria-label="Edit Profile">Edit here</a>
+                       href="/dashboard/<%= user.username %>/edit-account" aria-label="Edit Profile">Edit here</a>
                 </p>
                 <hr />
                 <div class="dashboard__content__delete-account">
                     <p>Do you wish to delete your account?</p>
-                    <form action="/dashboard/<%= user.username %>/delete-account" method="POST" style="display: inline;">
+                    <form action="/dashboard/<%= user.username %>/delete-account"
+                          method="POST"
+                          style="display: inline;">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="dashboard__content__delete-profile__link">Delete here</button>
                     </form>
@@ -86,6 +91,5 @@
 
             </article>
         </div>
-    </div>
     </div>
 </section>

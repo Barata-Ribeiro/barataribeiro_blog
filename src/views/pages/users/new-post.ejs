@@ -6,16 +6,17 @@
         <h1 id="newPostHeading" class="form__title">New Post</h1>
 
         <form id="newPostForm" action="/dashboard/<%= user.username %>/posts/new-post" method="POST" class="form"
-            aria-describedby="formInstructions">
+              aria-describedby="formInstructions">
             <p id="formInstructions" class="form__instructions">Please fill out the form to create a new post. All
-                fields are required unless otherwise noted.</p>
+                fields are required unless otherwise noted.
+            </p>
 
             <fieldset class="form__fieldset">
                 <label for="title" class="form__label">Title
                     <span class="form__required">*</span>
                 </label>
                 <input type="text" id="title" name="title" placeholder="Post Title" aria-label="Title"
-                    class="form__input" required>
+                       class="form__input" required>
             </fieldset>
 
             <fieldset class="form__fieldset">
@@ -23,9 +24,9 @@
                     <span class="form__required">*</span>
                 </label>
                 <textarea id="summary" name="summary" aria-label="Summary"
-                    class="form__textarea form__textarea__summary"
-                    placeholder="Write your post summary here... 150 characters max." maxlength="150"
-                    required></textarea>
+                          class="form__textarea form__textarea__summary"
+                          placeholder="Write your post summary here... 150 characters max." maxlength="150"
+                          required></textarea>
                 <p id="summaryHelp" class="form__help">Remaining characters: <span id="summary-total-chars">150</span>
                 </p>
             </fieldset>
@@ -35,19 +36,20 @@
                     <span class="form__required">*</span>
                 </label>
                 <textarea id="content" name="content" aria-label="Content" class="form__textarea"
-                    placeholder="Write your post content here..." required></textarea>
+                          placeholder="Write your post content here..." required></textarea>
             </fieldset>
 
             <fieldset class="form__fieldset">
                 <label for="tags" class="form__label">Tags</label>
                 <input type="text" id="tags" name="tags" placeholder="Add tags separated by commas" aria-label="Tags"
-                    class="form__input">
+                       class="form__input">
 
                 <div class="tags">
                     <p class="tags__title">Available Tags: </p>
                     <ul class="tags__list">
                         <% tags.forEach(tag => { %>
-                        <li class="tags__item"><%= tag.name %><span class="tags__item-total">(<%= tag.posts %>)</span>
+                            <li class="tags__item"><%= tag.name %>
+                                <span class="tags__item-total">(<%= tag.posts %>)</span>
                         </li>
                         <% }) %>
                     </ul>
@@ -57,20 +59,20 @@
             <div class="form__group">
                 <div class="form__subgroup">
                     <button id="createPostButton" name="createPostButton" type="submit" class="form__submit"
-                        aria-label="Publish Post">Publish
+                            aria-label="Publish Post">Publish
                         Post</button>
 
                     <div class="form__subgroup-wrapper" role="group" aria-label="Draft options">
                         <button id="saveDraftButton" name="saveDraftButton" class="form__regular-button" type="button"
-                            aria-label="Save Draft">
+                                aria-label="Save Draft">
                             Draft</button>
                         <button id="deleteDraftButton" name="deleteDraftButton" class="form__regular-button"
-                            type="button" aria-label="Delete Draft">&#10005</button>
+                                type="button" aria-label="Delete Draft">&#10005</button>
                     </div>
                 </div>
                 <% if (error) { %>
-                <span id="error-message" role="alert" aria-live="assertive"
-                    class="form__error-message"><%= error %></span>
+                    <span id="error-message" role="alert" aria-live="assertive"
+                          class="form__error-message"><%= error %></span>
                 <% } %>
             </div>
         </form>
@@ -83,79 +85,76 @@
 </section>
 <script nonce="<%= nonce %>" src="https://cdn.jsdelivr.net/npm/prismjs@1.29/prism.min.js"></script>
 <script type="module" nonce="<%= nonce %>">
-    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-    import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.9/+esm';
+    import DOMPurify from "https://cdn.jsdelivr.net/npm/dompurify@3.0.9/+esm"
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js"
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const contentEl = document.getElementById("content");
-        const summaryEl = document.getElementById("summary");
-        const postPreview = document.getElementById("post-preview");
-        const buttonEl = document.getElementById("createPostButton");
+    document.addEventListener("DOMContentLoaded", () => {
+        const contentEl = document.getElementById("content")
+        const summaryEl = document.getElementById("summary")
+        const postPreview = document.getElementById("post-preview")
+        const buttonEl = document.getElementById("createPostButton")
 
-        const saveDraftButton = document.getElementById("saveDraftButton");
-        const deleteDraftButton = document.getElementById("deleteDraftButton");
-        const summaryTotalChars = document.getElementById("summary-total-chars");
+        const saveDraftButton = document.getElementById("saveDraftButton")
+        const deleteDraftButton = document.getElementById("deleteDraftButton")
+        const summaryTotalChars = document.getElementById("summary-total-chars")
 
-        const draft = localStorage.getItem('draft');
+        const draft = localStorage.getItem("draft")
         if (draft) {
-            const { title, summary, content, tags } = JSON.parse(draft);
-            document.getElementById("title").value = title;
-            document.getElementById("summary").value = summary;
-            document.getElementById("content").value = content;
-            document.getElementById("tags").value = tags;
+            const { title, summary, content, tags } = JSON.parse(draft)
+            document.getElementById("title").value = title
+            document.getElementById("summary").value = summary
+            document.getElementById("content").value = content
+            document.getElementById("tags").value = tags
         }
 
-        const updateSummaryChars = () =>
-            summaryTotalChars.textContent = 150 - summaryEl.value.length;
+        const updateSummaryChars = () => summaryTotalChars.textContent = (150 - summaryEl.value.length).toString()
 
 
         const updatePreview = () => {
             marked.use({
-                pedantic: false,
-                gfm: true,
-                breaks: true,
-                highlight: function(code, lang) {
-                    if (Prism.languages[lang])
-                        return Prism.highlight(code, Prism.languages[lang], lang);
+                           pedantic: false,
+                           gfm: true,
+                           breaks: true,
+                           highlight: function (code, lang) {
+                               if (Prism.languages[lang])
+                                   return Prism.highlight(code, Prism.languages[lang], lang)
 
-                    return code;
-                }
-            });
+                               return code
+                           }
+                       })
 
-            const parsedContent = marked.parse(contentEl.value);
-            const sanitizedContent = DOMPurify.sanitize(parsedContent);
+            const parsedContent = marked.parse(contentEl.value)
+            postPreview.innerHTML = DOMPurify.sanitize(parsedContent)
+            Prism.highlightAllUnder(postPreview)
+        }
 
-            postPreview.innerHTML = sanitizedContent;
-            Prism.highlightAllUnder(postPreview);
-        };
+        summaryEl.addEventListener("input", updateSummaryChars)
+        contentEl.addEventListener("input", updatePreview)
+        updateSummaryChars()
+        updatePreview()
 
-        summaryEl.addEventListener('input', updateSummaryChars);
-        contentEl.addEventListener('input', updatePreview);
-        updateSummaryChars();
-        updatePreview();
-
-        const formEl = document.getElementById("newPostForm");
-        saveDraftButton.addEventListener('click', (event) => {
-            event.preventDefault();
+        const formEl = document.getElementById("newPostForm")
+        saveDraftButton.addEventListener("click", (event) => {
+            event.preventDefault()
             const draft = JSON.stringify({
-                title: formEl.title.value,
-                summary: formEl.summary.value,
-                content: formEl.content.value,
-                tags: formEl.tags.value
-            });
-            alert('Draft saved');
-            localStorage.setItem('draft', draft);
+                                             title: formEl.title.value,
+                                             summary: formEl.summary.value,
+                                             content: formEl.content.value,
+                                             tags: formEl.tags.value
+                                         })
+            alert("Draft saved")
+            localStorage.setItem("draft", draft)
         })
 
-        deleteDraftButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            alert('Draft deleted');
-            localStorage.removeItem('draft');
+        deleteDraftButton.addEventListener("click", (event) => {
+            event.preventDefault()
+            alert("Draft deleted")
+            localStorage.removeItem("draft")
         })
 
-        formEl.addEventListener('submit', function() {
-            buttonEl.disabled = true;
-            buttonEl.textContent = "Publishing...";
-        });
-    });
+        formEl.addEventListener("submit", function () {
+            buttonEl.disabled = true
+            buttonEl.textContent = "Publishing..."
+        })
+    })
 </script>

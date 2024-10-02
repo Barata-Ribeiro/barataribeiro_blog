@@ -8,7 +8,7 @@
                 <span class="form__required">*</span>
             </label>
             <input type="text" autocomplete="username" class="form__input" name="username" id="username" required
-                aria-required="true" aria-label="Username" />
+                   aria-required="true" aria-label="Username" />
         </fieldset>
 
         <fieldset class="form__fieldset">
@@ -17,8 +17,7 @@
                 <span class="form__required">*</span>
             </label>
             <input type="password" autocomplete="current-password" class="form__input" name="password" id="password"
-                required aria-required="true" aria-label="Password" />
-            </div>
+                   required aria-required="true" aria-label="Password" />
         </fieldset>
 
         <div class="form__group">
@@ -26,8 +25,8 @@
                 Login
             </button>
             <% if (error) { %>
-            <span id="error-message" role="alert" aria-label="<%= error %>"
-                class="form__error-message"><%= error %></span>
+                <span id="error-message" role="alert" aria-label="<%= error %>"
+                      class="form__error-message"><%= error %></span>
             <% } %>
         </div>
     </form>
@@ -36,13 +35,13 @@
     </p> -->
 </section>
 <script nonce="<%= nonce %>">
-    document.addEventListener('DOMContentLoaded', () => {
-        const formEl = document.getElementById("loginForm");
-        const buttonEl = document.getElementById("loginButton");
+    document.addEventListener("DOMContentLoaded", () => {
+        const formEl = document.getElementById("loginForm")
+        const buttonEl = document.getElementById("loginButton")
 
-        formEl.addEventListener('submit', function() {
-            buttonEl.disabled = true;
-            buttonEl.textContent = "Logging in...";
-        });
-    });
+        formEl.addEventListener("submit", function () {
+            buttonEl.disabled = true
+            buttonEl.textContent = "Logging in..."
+        })
+    })
 </script>
