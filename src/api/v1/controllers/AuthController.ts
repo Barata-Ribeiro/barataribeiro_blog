@@ -56,7 +56,7 @@ export class AuthController {
 
             res.locals.user = user
 
-            return res.sendStatus(302).redirect(`/dashboard/${user.username}`)
+            return res.redirect(`/dashboard/${user.username}`)
         })
     }
 
@@ -123,7 +123,7 @@ export class AuthController {
             res.locals.user = null
             res.clearCookie("connect.sid")
 
-            return res.sendStatus(302).redirect("/auth/login")
+            return res.redirect("/auth/login")
         })
     }
 

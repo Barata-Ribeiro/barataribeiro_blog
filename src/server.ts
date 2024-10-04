@@ -124,7 +124,7 @@ const startServer = async () => {
 
         // PAGE 404
         app.use((_req, res) =>
-            res.sendStatus(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
+            res.status(404).render("pages/errors/404", { title: "404 - Not Found", description: "Page not found" })
         )
 
         app.use(errorMiddleware)
