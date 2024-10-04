@@ -22,3 +22,7 @@ export function generateSlug(name: string): string {
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
 }
+
+export function escapeRegExp(string: string): string {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}

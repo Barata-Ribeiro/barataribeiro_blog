@@ -5,7 +5,7 @@ import { marked } from "marked"
 import { Types } from "mongoose"
 import Post from "../api/v1/models/Post"
 import Tag from "../api/v1/models/Tag"
-import { generateSlug, parseDate, parseDateToISO } from "../api/v1/utils/Functions"
+import { escapeRegExp, generateSlug, parseDate, parseDateToISO } from "../api/v1/utils/Functions"
 import { NotFoundError } from "../middlewares/helpers/ApiErrors"
 
 const routes = Router({ mergeParams: true })
@@ -20,14 +20,32 @@ routes.get("/", async (req: Request, res: Response) => {
 
     let tagIdList: Types.ObjectId[] = []
     let tagSlugList: string[] = []
+    let query = {}
     if (tags) {
         tags = decodeURIComponent(tags)
-        const tagList = tags.split(", ").map((tag) => generateSlug(tag))
+        const tagList = tags.split(/[,\.-]\s*/).map((tag) => generateSlug(tag))
         const foundTags = await Tag.find({ slug: { $in: tagList } })
         tagIdList = foundTags.map((tag) => tag._id)
         tagSlugList = foundTags.map((tag) => tag.slug)
+
+        if (tagIdList.length > 0) {
+            query = { tags: { $in: tagIdList } }
+        } else {
+            const originalTagList = tags
+                .split(/[,\.-]\s*/)
+                .map((tag) => tag.trim())
+                .filter((tag) => tag.length > 0)
+            query = {
+                $or: originalTagList.flatMap((tag) => {
+                    const escapedTag = escapeRegExp(tag)
+                    return [
+                        { title: { $regex: escapedTag, $options: "i" } },
+                        { content: { $regex: escapedTag, $options: "i" } }
+                    ]
+                })
+            }
+        }
     }
-    const query = tagIdList.length > 0 ? { tags: { $in: tagIdList } } : {}
 
     const [posts, total] = await Promise.all([
         Post.find(query)
